@@ -1,12 +1,64 @@
 "use client";
 
+import { Formats } from "@/components/formats";
+import { TeamComponent } from "@/components/team";
 import { AppShell, Button, Group, Stack, Text, Title } from "@mantine/core";
+import { Teams } from "@pkmn/sets";
 import { useAccount, useConnect, useDisconnect } from "wagmi";
+
+const exp = `Raichu  
+Ability: No Ability  
+EVs: 252 HP / 252 Atk / 252 Def / 252 SpA / 252 Spe  
+Serious Nature  
+- Rest  
+- Substitute  
+- Body Slam  
+- Thunder Wave  
+
+Chansey (F)  
+Ability: No Ability  
+- Reflect  
+- Substitute  
+- Seismic Toss  
+- Submission  
+
+Zapdos  
+Ability: No Ability  
+- Hyper Beam  
+- Reflect  
+- Thunder Wave  
+- Agility  
+
+Dodrio  
+Ability: No Ability  
+- Drill Peck  
+- Body Slam  
+- Rest  
+- Substitute  
+
+Moltres  
+Ability: No Ability  
+EVs: 252 HP / 252 Atk / 252 Def / 252 SpA / 252 Spe  
+Serious Nature  
+- Double-Edge  
+- Fire Spin  
+- Reflect  
+- Substitute  
+
+Magneton  
+Ability: No Ability  
+- Reflect  
+- Double-Edge  
+- Substitute  
+- Thunderbolt  
+`;
 
 function App() {
     const account = useAccount();
     const { connectors, connect, status, error } = useConnect();
     const { disconnect } = useDisconnect();
+
+    const team = Teams.importTeam(exp);
 
     return (
         <AppShell header={{ height: 60 }} padding="md">
@@ -52,6 +104,8 @@ function App() {
                         <Text>{error?.message}</Text>
                     </div>
                 </Stack>
+                <TeamComponent team={team} />
+                <Formats />
             </AppShell.Main>
         </AppShell>
     );

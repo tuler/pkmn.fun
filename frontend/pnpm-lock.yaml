@@ -20,6 +20,12 @@ dependencies:
   '@pkmn/randoms':
     specifier: ^0.9.28
     version: 0.9.28
+  '@pkmn/sets':
+    specifier: ^5.1.2
+    version: 5.1.2
+  '@pkmn/sim':
+    specifier: ^0.9.28
+    version: 0.9.28
   '@pkmn/view':
     specifier: ^0.6.30
     version: 0.6.30

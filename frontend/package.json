@@ -14,6 +14,8 @@
         "@pkmn/dex": "^0.9.28",
         "@pkmn/img": "^0.2.34",
         "@pkmn/randoms": "^0.9.28",
+        "@pkmn/sets": "^5.1.2",
+        "@pkmn/sim": "^0.9.28",
         "@pkmn/view": "^0.6.30",
         "@tanstack/react-query": "5.66.0",
         "next": "15.1.6",
