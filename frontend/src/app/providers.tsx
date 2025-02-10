@@ -16,7 +16,7 @@ export function Providers(props: {
     const [queryClient] = useState(() => new QueryClient());
 
     return (
-        <MantineProvider theme={theme} defaultColorScheme="dark">
+        <MantineProvider theme={theme}>
             <WagmiProvider config={config} initialState={props.initialState}>
                 <QueryClientProvider client={queryClient}>
                     {props.children}

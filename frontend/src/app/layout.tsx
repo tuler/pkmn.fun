@@ -29,7 +29,7 @@ export default async function RootLayout(props: { children: ReactNode }) {
                     name="viewport"
                     content="width=device-width, initial-scale=1.0"
                 />
-                <ColorSchemeScript defaultColorScheme="dark" />
+                <ColorSchemeScript />
             </head>
             <body className={inter.className}>
                 <Providers initialState={initialState}>

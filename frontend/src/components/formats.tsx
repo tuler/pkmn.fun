@@ -1,17 +1,38 @@
 import { FC } from "react";
-import { Dex } from "@pkmn/sim";
-import { Select, Stack, Text } from "@mantine/core";
+import { Dex, Format } from "@pkmn/sim";
+import { Select, SelectProps } from "@mantine/core";
 
-export const Formats: FC = () => {
+const supportedMods = [
+    "gen1",
+    "gen2",
+    "gen3",
+    "gen4",
+    "gen5",
+    "gen6",
+    "gen7",
+    //"gen8", // XXX: not working, 'global is not defined' error
+    //"gen9", // XXX: not working, 'global is not defined' error
+];
+
+export const isRandomSupported = (format: Format): boolean => {
+    return (
+        format.exists &&
+        format.team === "random" &&
+        !!format.mod &&
+        supportedMods.includes(format.mod)
+    );
+};
+
+export interface FormatsProps extends SelectProps {}
+
+export const Formats: FC<SelectProps> = (props) => {
     const formats = Dex.formats.all();
     return (
-        <Stack>
-            <Select
-                label="Format"
-                placeholder="Select a battle format"
-                data={formats.map((format) => format.name)}
-            />
-            <Text></Text>
-        </Stack>
+        <Select
+            label="Format"
+            placeholder="Select a battle format"
+            data={formats.map((format) => format.id)}
+            {...props}
+        />
     );
 };

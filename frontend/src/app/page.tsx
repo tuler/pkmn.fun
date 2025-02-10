@@ -1,10 +1,23 @@
 "use client";
 
-import { Formats } from "@/components/formats";
+import { Formats, isRandomSupported } from "@/components/formats";
 import { TeamComponent } from "@/components/team";
-import { AppShell, Button, Group, Stack, Text, Title } from "@mantine/core";
-import { Teams } from "@pkmn/sets";
-import { useAccount, useConnect, useDisconnect } from "wagmi";
+import {
+    Alert,
+    Anchor,
+    AppShell,
+    Button,
+    Center,
+    Group,
+    Image,
+    Stack,
+    Text,
+} from "@mantine/core";
+import { PokemonSet, Teams } from "@pkmn/sets";
+import { TeamGenerators } from "@pkmn/randoms";
+import { IconInfoCircle } from "@tabler/icons-react";
+import { useState } from "react";
+import { Dex, Format } from "@pkmn/sim";
 
 const exp = `Raichu  
 Ability: No Ability  
@@ -53,12 +66,31 @@ Ability: No Ability
 - Thunderbolt  
 `;
 
-function App() {
-    const account = useAccount();
-    const { connectors, connect, status, error } = useConnect();
-    const { disconnect } = useDisconnect();
+const DEFAULT_FORMAT = Dex.formats.get("gen5randombattle");
 
+function App() {
+    const [format, setFormat] = useState<Format>(DEFAULT_FORMAT);
     const team = Teams.importTeam(exp);
+
+    const [error, setError] = useState<string>();
+    const [team1, setTeam1] = useState<PokemonSet<string>[] | undefined>();
+    const [team2, setTeam2] = useState<PokemonSet<string>[] | undefined>();
+
+    const randomTeam = () => {
+        try {
+            setError(undefined);
+            const teamGenerator = TeamGenerators.getTeamGenerator(format);
+            const team = teamGenerator.getTeam();
+            setTeam1(team);
+        } catch (e: unknown) {
+            console.error(e);
+            if (typeof e === "string") {
+                setError(e);
+            } else if (e instanceof Error) {
+                setError(e.message);
+            }
+        }
+    };
 
     return (
         <AppShell header={{ height: 60 }} padding="md">
@@ -68,44 +100,46 @@ function App() {
                 </Group>
             </AppShell.Header>
             <AppShell.Main>
-                <Stack>
-                    <div>
-                        <Title>Account</Title>
-
-                        <Stack>
-                            <Text>status: {account.status}</Text>
-                            <Text>
-                                addresses: {JSON.stringify(account.addresses)}
-                            </Text>
-                            <Text>chainId: {account.chainId}</Text>
-                        </Stack>
-
-                        {account.status === "connected" && (
-                            <Button onClick={() => disconnect()}>
-                                Disconnect
-                            </Button>
-                        )}
-                    </div>
-
-                    <div>
-                        <Title>Connect</Title>
-                        <Group>
-                            {connectors.map((connector) => (
-                                <Button
-                                    key={connector.uid}
-                                    onClick={() => connect({ connector })}
-                                    type="button"
-                                >
-                                    {connector.name}
-                                </Button>
-                            ))}
-                        </Group>
-                        <Text>{status}</Text>
-                        <Text>{error?.message}</Text>
-                    </div>
+                <Stack gap={50}>
+                    {error && (
+                        <Alert
+                            variant="light"
+                            color="red"
+                            title="Error"
+                            icon={<IconInfoCircle />}
+                        >
+                            {error}
+                        </Alert>
+                    )}
+                    <Formats
+                        value={format.id}
+                        onChange={(value) =>
+                            value
+                                ? setFormat(Dex.formats.get(value))
+                                : setFormat(DEFAULT_FORMAT)
+                        }
+                    />
+                    <Group justify="center">
+                        <Button
+                            onClick={randomTeam}
+                            disabled={!isRandomSupported(format)}
+                        >
+                            Random Team
+                        </Button>
+                        <Anchor
+                            href="https://play.pokemonshowdown.com/teambuilder"
+                            target="_blank"
+                        >
+                            Team Builder
+                        </Anchor>
+                        <Button onClick={randomTeam}>Import Team</Button>
+                    </Group>
+                    <TeamComponent team={team1} />
+                    <Center>
+                        <Image src="/img/versus.png" w={100} h={80} />
+                    </Center>
+                    <TeamComponent team={team2} />
                 </Stack>
-                <TeamComponent team={team} />
-                <Formats />
             </AppShell.Main>
         </AppShell>
     );
