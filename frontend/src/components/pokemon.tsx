@@ -1,6 +1,8 @@
+"use client";
+
 import { FC } from "react";
 import { Sprites } from "@pkmn/img";
-import { Center, Image, Stack, Text } from "@mantine/core";
+import { Image } from "@mantine/core";
 
 export const Pokemon: FC<{ name?: string }> = ({ name }) => {
     let url, w, h, pixelated;
@@ -22,20 +24,11 @@ export const Pokemon: FC<{ name?: string }> = ({ name }) => {
     }
 
     return (
-        <Stack justify="space-between">
-            <Center>
-                <Text>{name}</Text>
-            </Center>
-            <Center>
-                <Image
-                    w={w}
-                    h={h}
-                    src={url}
-                    style={
-                        pixelated ? { imageRendering: "pixelated" } : undefined
-                    }
-                />
-            </Center>
-        </Stack>
+        <Image
+            w={w}
+            h={h}
+            src={url}
+            style={pixelated ? { imageRendering: "pixelated" } : undefined}
+        />
     );
 };

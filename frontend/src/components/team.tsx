@@ -1,6 +1,8 @@
+"use client";
+
 import { FC } from "react";
 import { PokemonSet, Team } from "@pkmn/sets";
-import { SimpleGrid } from "@mantine/core";
+import { Center, Group, SimpleGrid } from "@mantine/core";
 import { Pokemon } from "./pokemon";
 
 export interface TeamProps {
@@ -11,7 +13,9 @@ export const TeamComponent: FC<TeamProps> = ({ team }) => {
     return (
         <SimpleGrid cols={team?.length}>
             {team?.map((pk, index) => (
-                <Pokemon key={index} name={pk.name || pk.species} />
+                <Group key={index} justify="center">
+                    <Pokemon key={index} name={pk.name || pk.species} />
+                </Group>
             ))}
         </SimpleGrid>
     );
