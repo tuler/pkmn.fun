@@ -22,8 +22,8 @@ function App() {
     );
 
     return (
-        <Stack gap={50} p={100} pt={200}>
-            <TeamComponent team={team} />
+        <Stack gap={50} p={100} pt={160}>
+            <TeamComponent team={team} h={200} />
             <Group justify="center">
                 <Button
                     variant="gradient"
