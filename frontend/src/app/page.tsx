@@ -2,9 +2,10 @@
 
 import { isRandomSupported } from "@/components/formats";
 import { TeamComponent } from "@/components/team";
-import { Button, Group, Stack } from "@mantine/core";
+import { ActionIcon, Anchor, Button, Group, Stack } from "@mantine/core";
 import { PokemonSet } from "@pkmn/sets";
 import { TeamGenerators } from "@pkmn/randoms";
+import { IconBrandGithub, IconBrandX } from "@tabler/icons-react";
 import { useState } from "react";
 import { Dex, Format } from "@pkmn/sim";
 
@@ -22,7 +23,22 @@ function App() {
     );
 
     return (
-        <Stack gap={50} p={100} pt={160}>
+        <Stack gap={50} p={100}>
+            <Group justify="center">
+                <Anchor href="https://x.com/pkmn_fun" target="_blank">
+                    <ActionIcon
+                        size="lg"
+                        color="gray"
+                        variant="subtle"
+                        radius="lg"
+                    >
+                        <IconBrandX
+                            style={{ width: "70%", height: "70%" }}
+                            stroke={1.5}
+                        />
+                    </ActionIcon>
+                </Anchor>
+            </Group>
             <TeamComponent team={team} h={200} />
             <Group justify="center">
                 <Button
