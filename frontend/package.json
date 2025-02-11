@@ -19,7 +19,7 @@
         "@pkmn/view": "^0.6.30",
         "@tabler/icons-react": "^3.30.0",
         "@tanstack/react-query": "5.66.0",
-        "next": "15.1.6",
+        "next": "15.1.7",
         "react": "^19.0.0",
         "react-dom": "^19.0.0",
         "viem": "latest",
