@@ -1,19 +1,12 @@
-import { http, cookieStorage, createConfig, createStorage } from "wagmi";
+import { getDefaultConfig } from "@rainbow-me/rainbowkit";
 import { anvil, holesky } from "wagmi/chains";
-import { injected } from "wagmi/connectors";
 
 export function getConfig() {
-    return createConfig({
+    return getDefaultConfig({
+        appName: "pkmn.fun",
+        projectId: process.env.NEXT_PUBLIC_REOWN_PROJECT_ID!,
         chains: [anvil, holesky],
-        connectors: [injected()],
-        storage: createStorage({
-            storage: cookieStorage,
-        }),
         ssr: true,
-        transports: {
-            [anvil.id]: http(),
-            [holesky.id]: http(),
-        },
     });
 }
 

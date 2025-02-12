@@ -9,8 +9,9 @@ import {
 } from "@mantine/core";
 import { PokemonSet } from "@pkmn/sets";
 import { Teams } from "@pkmn/sim";
+import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
 import { IconExclamationCircle } from "@tabler/icons-react";
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { Address, keccak256, toHex } from "viem";
 import {
     useAccount,
@@ -26,8 +27,8 @@ export interface CommitMatchProps {
 }
 
 export const CommitMatch: FC<CommitMatchProps> = ({ team }) => {
-    const { isConnected, connector, isConnecting, chain } = useAccount();
-
+    const { isConnected } = useAccount();
+    const addRecentTransaction = useAddRecentTransaction();
     const packed = Teams.pack(team);
     const teamHash = keccak256(toHex(packed));
 
@@ -45,6 +46,15 @@ export const CommitMatch: FC<CommitMatchProps> = ({ team }) => {
             args: [teamHash],
         });
     };
+
+    useEffect(() => {
+        if (hash) {
+            addRecentTransaction({
+                hash,
+                description: "Committing team...",
+            });
+        }
+    }, [hash]);
 
     return (
         <Stack>
@@ -72,15 +82,6 @@ export const CommitMatch: FC<CommitMatchProps> = ({ team }) => {
                         disabled={!writeContract || isPending}
                     >
                         {isPending ? "Confirming..." : "Commit"}
-                    </Button>
-                )}
-                {!isConnected && connector && (
-                    <Button
-                        onClick={() => connector.connect()}
-                        variant="gradient"
-                        loading={isConnecting}
-                    >
-                        Connect
                     </Button>
                 )}
             </Group>

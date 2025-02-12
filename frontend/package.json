@@ -17,6 +17,7 @@
         "@pkmn/sets": "^5.1.2",
         "@pkmn/sim": "^0.9.28",
         "@pkmn/view": "^0.6.30",
+        "@rainbow-me/rainbowkit": "^2.2.3",
         "@tabler/icons-react": "^3.30.0",
         "@tanstack/react-query": "5.66.0",
         "next": "15.1.7",
