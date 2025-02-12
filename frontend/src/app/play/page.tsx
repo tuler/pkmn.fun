@@ -1,62 +1,24 @@
 "use client";
 
+import { TeamBuilder } from "@/components/builder";
 import { CommitMatch } from "@/components/commit";
 import { useFormat } from "@/hooks/format";
-import { Stack, Title } from "@mantine/core";
-import { Teams } from "@pkmn/sim";
-
-const exp = `Raichu  
-Ability: No Ability  
-EVs: 252 HP / 252 Atk / 252 Def / 252 SpA / 252 Spe  
-Serious Nature  
-- Rest  
-- Substitute  
-- Body Slam  
-- Thunder Wave  
-
-Chansey (F)  
-Ability: No Ability  
-- Reflect  
-- Substitute  
-- Seismic Toss  
-- Submission  
-
-Zapdos  
-Ability: No Ability  
-- Hyper Beam  
-- Reflect  
-- Thunder Wave  
-- Agility  
-
-Dodrio  
-Ability: No Ability  
-- Drill Peck  
-- Body Slam  
-- Rest  
-- Substitute  
-
-Moltres  
-Ability: No Ability  
-EVs: 252 HP / 252 Atk / 252 Def / 252 SpA / 252 Spe  
-Serious Nature  
-- Double-Edge  
-- Fire Spin  
-- Reflect  
-- Substitute  
-
-Magneton  
-Ability: No Ability  
-- Reflect  
-- Double-Edge  
-- Substitute  
-- Thunderbolt  
-`;
+import { Stack } from "@mantine/core";
+import { PokemonSet } from "@pkmn/sets";
+import { useState } from "react";
 
 function Play() {
-    const team = Teams.import(exp);
+    // team to play
+    const [team, setTeam] = useState<PokemonSet<string>[] | undefined>();
+
+    // format (comes from onchain)
     const { format } = useFormat();
+
     return (
         <Stack gap={50} p={100}>
+            {format && !team && (
+                <TeamBuilder format={format} onSave={setTeam} />
+            )}
             {team && <CommitMatch team={team} />}
         </Stack>
     );

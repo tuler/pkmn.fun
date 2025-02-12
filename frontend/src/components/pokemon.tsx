@@ -2,9 +2,15 @@
 
 import { FC } from "react";
 import { Sprites } from "@pkmn/img";
-import { Image } from "@mantine/core";
+import { Image, ImageProps } from "@mantine/core";
 
-export const Pokemon: FC<{ name?: string }> = ({ name }) => {
+export interface PokemonProps extends ImageProps {
+    name?: string;
+}
+
+export const Pokemon: FC<PokemonProps> = (props) => {
+    const { name, ...imageProps } = props;
+
     let url, w, h, pixelated;
     if (name) {
         // XXX: pass gender as well
@@ -29,6 +35,7 @@ export const Pokemon: FC<{ name?: string }> = ({ name }) => {
             h={h}
             src={url}
             style={pixelated ? { imageRendering: "pixelated" } : undefined}
+            {...imageProps}
         />
     );
 };

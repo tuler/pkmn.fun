@@ -40,7 +40,7 @@ export const Teaser: FC = () => {
                     </ActionIcon>
                 </Anchor>
             </Group>
-            <TeamComponent team={team} h={200} />
+            <TeamComponent team={team} h={200} speciesOnly={true} />
             <Group justify="center">
                 <Button
                     variant="gradient"

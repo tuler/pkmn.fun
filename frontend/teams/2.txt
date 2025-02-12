@@ -1,0 +1,55 @@
+Dialga @ Mental Herb  
+Ability: Pressure  
+EVs: 252 HP / 4 Atk / 252 Def  
+Relaxed Nature  
+- Protect  
+- Thunderbolt  
+- Rock Slide  
+- Facade  
+
+Golbat @ Coba Berry  
+Ability: Infiltrator  
+EVs: 252 Atk / 4 SpA / 252 Spe  
+Hasty Nature  
+- Snatch  
+- Double-Edge  
+- Poison Fang  
+- Sludge Bomb  
+
+Vulpix @ Choice Scarf  
+Ability: Flash Fire  
+EVs: 4 Atk / 252 SpA / 252 Spe  
+Hasty Nature  
+- Snore  
+- Flare Blitz  
+- Energy Ball  
+- Quick Attack  
+
+Krabby @ Leftovers  
+Ability: Hyper Cutter  
+EVs: 252 HP / 252 Atk / 4 SpA  
+Naughty Nature  
+- Strength  
+- Hidden Power [Ice]  
+- Liquidation  
+- Stomp  
+
+Exeggcute @ Mago Berry  
+Ability: Harvest  
+EVs: 4 Atk / 252 SpA / 252 Spe  
+Rash Nature  
+IVs: 0 Atk  
+- Snore  
+- Sludge Bomb  
+- Bide  
+- Infestation  
+
+Jumpluff @ Power Herb  
+Ability: Chlorophyll  
+EVs: 252 HP / 4 Atk / 252 Spe  
+Hasty Nature  
+- Round  
+- Encore  
+- Bounce  
+- Mimic  
+
