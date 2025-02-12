@@ -1,4 +1,4 @@
-import { Match } from "@/components/match";
+import { MatchComponent } from "@/components/match";
 import { Stack } from "@mantine/core";
 
 export default async function MatchPage({
@@ -10,7 +10,7 @@ export default async function MatchPage({
 
     return (
         <Stack gap={50} p={100}>
-            <Match id={BigInt(id)} />
+            <MatchComponent id={BigInt(id)} />
         </Stack>
     );
 }

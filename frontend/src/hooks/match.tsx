@@ -1,5 +1,15 @@
 import { Address, Hash, Hex } from "viem";
-import { useReadPkmnv1Matches } from "./contracts";
+import {
+    useReadPkmnv1Matches,
+    useReadPkmnv1PlayerActiveMatch,
+} from "./contracts";
+
+export enum MatchPhase {
+    COMMIT, // Players submit team hashes
+    REVEAL, // Players reveal their teams
+    BATTLE, // Match is simulated
+    COMPLETED, // Match is finished
+}
 
 export type Match = {
     player1: Address;
@@ -9,15 +19,16 @@ export type Match = {
     player1TeamData: Hex;
     player2TeamData: Hex;
     revealDeadline: bigint;
-    phase: number;
+    phase: MatchPhase;
     outcome: number;
     winner: Address;
     description: Hex;
 };
 
-export const useMatch = (id: bigint) => {
+export const useMatch = (id?: bigint) => {
     const read = useReadPkmnv1Matches({
-        args: [id],
+        args: [id!],
+        query: { enabled: !!id },
     });
 
     const { data } = read;
@@ -38,4 +49,12 @@ export const useMatch = (id: bigint) => {
         : undefined;
 
     return { match, ...read };
+};
+
+export const usePlayerMatch = (address?: Address) => {
+    const { data: id } = useReadPkmnv1PlayerActiveMatch({
+        args: [address!],
+        query: { enabled: !!address },
+    });
+    return useMatch(id);
 };

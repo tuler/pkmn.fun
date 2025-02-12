@@ -1,7 +1,8 @@
 "use client";
 
 import { CommitMatch } from "@/components/commit";
-import { Stack } from "@mantine/core";
+import { useFormat } from "@/hooks/format";
+import { Stack, Title } from "@mantine/core";
 import { Teams } from "@pkmn/sim";
 
 const exp = `Raichu  
@@ -53,6 +54,7 @@ Ability: No Ability
 
 function Play() {
     const team = Teams.import(exp);
+    const { format } = useFormat();
     return (
         <Stack gap={50} p={100}>
             {team && <CommitMatch team={team} />}

@@ -12,15 +12,11 @@ import { Teams } from "@pkmn/sim";
 import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
 import { IconExclamationCircle } from "@tabler/icons-react";
 import { FC, useEffect } from "react";
-import { Address, keccak256, toHex } from "viem";
-import {
-    useAccount,
-    useWaitForTransactionReceipt,
-    useWriteContract,
-} from "wagmi";
+import { keccak256, toHex } from "viem";
+import { useAccount, useWaitForTransactionReceipt } from "wagmi";
 import { TeamComponent } from "./team";
-import pkmnv1 from "@/abi/pkmnv1";
 import { TransactionHash } from "./txhash";
+import { useWritePkmnv1CommitTeam } from "@/hooks/contracts";
 
 export interface CommitMatchProps {
     team: PokemonSet<string>[];
@@ -32,20 +28,16 @@ export const CommitMatch: FC<CommitMatchProps> = ({ team }) => {
     const packed = Teams.pack(team);
     const teamHash = keccak256(toHex(packed));
 
-    const { data: hash, error, isPending, writeContract } = useWriteContract();
+    const {
+        data: hash,
+        error,
+        isPending,
+        writeContract: commitTeam,
+    } = useWritePkmnv1CommitTeam();
     const { isLoading: isConfirming, isSuccess: isConfirmed } =
         useWaitForTransactionReceipt({
             hash,
         });
-
-    const commit = () => {
-        writeContract({
-            address: process.env.NEXT_PUBLIC_PKMN_CONTRACT_ADDRESS as Address,
-            abi: pkmnv1,
-            functionName: "commitTeam",
-            args: [teamHash],
-        });
-    };
 
     useEffect(() => {
         if (hash) {
@@ -77,9 +69,9 @@ export const CommitMatch: FC<CommitMatchProps> = ({ team }) => {
             <Group justify="center">
                 {isConnected && (
                     <Button
-                        onClick={commit}
+                        onClick={() => commitTeam({ args: [teamHash] })}
                         variant="gradient"
-                        disabled={!writeContract || isPending}
+                        disabled={!commitTeam || isPending}
                     >
                         {isPending ? "Confirming..." : "Commit"}
                     </Button>
