@@ -1,9 +1,8 @@
 "use client";
 
-import { TeamBuilder } from "@/components/builder";
 import { CommitMatch } from "@/components/commit";
 import { Stack } from "@mantine/core";
-import { Dex, Teams } from "@pkmn/sim";
+import { Teams } from "@pkmn/sim";
 
 const exp = `Raichu  
 Ability: No Ability  
@@ -53,17 +52,10 @@ Ability: No Ability
 `;
 
 function Play() {
-    const format = Dex.formats.get("gen7randombattle");
     const team = Teams.import(exp);
     return (
         <Stack gap={50} p={100}>
             {team && <CommitMatch team={team} />}
-            <TeamBuilder
-                format={format}
-                onSave={(team) => {
-                    console.log(team);
-                }}
-            />
         </Stack>
     );
 }
