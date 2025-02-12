@@ -1,6 +1,5 @@
-import pkmnv1 from "@/abi/pkmnv1";
 import { Address, Hash, Hex } from "viem";
-import { useReadContract } from "wagmi";
+import { useReadPkmnv1Matches } from "./contracts";
 
 export type Match = {
     player1: Address;
@@ -17,10 +16,7 @@ export type Match = {
 };
 
 export const useMatch = (id: bigint) => {
-    const read = useReadContract({
-        address: process.env.NEXT_PUBLIC_PKMN_CONTRACT_ADDRESS as Address,
-        abi: pkmnv1,
-        functionName: "matches",
+    const read = useReadPkmnv1Matches({
         args: [id],
     });
 

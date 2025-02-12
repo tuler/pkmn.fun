@@ -1,7 +1,7 @@
 "use client";
 
 import { useMatch } from "@/hooks/match";
-import { Stack, Textarea } from "@mantine/core";
+import { Stack, Text, Textarea } from "@mantine/core";
 import { FC } from "react";
 
 export interface MatchProps {
