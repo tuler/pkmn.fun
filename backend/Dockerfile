@@ -8,9 +8,12 @@
 # to ensure that the appropriate binaries will be generated.
 FROM node:20.16.0-bookworm AS build-stage
 
+# install pnpm
+RUN npm install -g pnpm
+
 WORKDIR /opt/cartesi/dapp
 COPY . .
-RUN yarn install && yarn build
+RUN pnpm install && pnpm run build
 
 # runtime stage: produces final image that will be executed
 
