@@ -6,6 +6,7 @@ const theme = createTheme({
         to: "red",
         deg: 45,
     },
+    primaryColor: "red",
 });
 
 export default theme;
