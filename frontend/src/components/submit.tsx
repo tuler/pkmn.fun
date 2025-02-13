@@ -27,9 +27,14 @@ import { TeamSpecies } from "./team";
 interface SubmitTeamProps {
     teamNumber: 1 | 2;
     team: PokemonSet<string>[];
+    onCancel: () => void;
 }
 
-export const SubmitTeam: FC<SubmitTeamProps> = ({ teamNumber, team }) => {
+export const SubmitTeam: FC<SubmitTeamProps> = ({
+    onCancel,
+    teamNumber,
+    team,
+}) => {
     const { colorScheme } = useMantineColorScheme();
     const addRecentTransaction = useAddRecentTransaction();
     const packed = Teams.pack(team);
@@ -91,6 +96,13 @@ export const SubmitTeam: FC<SubmitTeamProps> = ({ teamNumber, team }) => {
                     backgroundOpacity={0.6}
                 >
                     <Group justify="center" h="100%">
+                        <Button
+                            onClick={onCancel}
+                            variant="white"
+                            disabled={!submitTeam || isPending || !simulateData}
+                        >
+                            Cancel
+                        </Button>
                         <Button
                             onClick={handleSubmit}
                             variant="gradient"
