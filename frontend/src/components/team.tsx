@@ -2,8 +2,16 @@
 
 import { FC } from "react";
 import { PokemonSet } from "@pkmn/sets";
-import { Flex, FlexProps, StyleProp } from "@mantine/core";
+import {
+    Flex,
+    FlexProps,
+    Image,
+    Overlay,
+    StyleProp,
+    useMantineColorScheme,
+} from "@mantine/core";
 import { Pokemon } from "./pokemon";
+import { useColorScheme } from "@mantine/hooks";
 
 export interface TeamSpeciesProps extends FlexProps {
     team?: PokemonSet<string>[] | null;
@@ -44,6 +52,38 @@ export const TeamSpecies: FC<TeamSpeciesProps> = (props) => {
                     key={index}
                 >
                     <Pokemon key={index} name={pk.name || pk.species} />
+                </Flex>
+            ))}
+        </Flex>
+    );
+};
+
+export interface UndefinedTeamProps extends FlexProps {
+    count?: number;
+}
+
+export const UndefinedTeam: FC<UndefinedTeamProps> = (props) => {
+    const { count = 6, ...otherProps } = props;
+    const direction = props.direction ?? "row";
+    const align = direction === "row" ? "flex-end" : "flex-start";
+
+    return (
+        <Flex
+            align={align}
+            justify="center"
+            gap={20}
+            {...otherProps}
+            direction={direction}
+            pos="relative"
+            wrap="wrap"
+        >
+            {Array.from({ length: count }, (_, i) => i).map((index) => (
+                <Flex
+                    direction={oppositeDirection(direction)}
+                    align="center"
+                    key={index}
+                >
+                    <Image src={"/img/pikachu_silhouette.png"} w={150} />
                 </Flex>
             ))}
         </Flex>

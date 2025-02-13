@@ -1,5 +1,6 @@
 "use client";
 
+import { Arena } from "@/components/arena";
 import { TeamBuilder } from "@/components/builder";
 import { CommitMatch } from "@/components/commit";
 import { useFormat } from "@/hooks/format";
@@ -20,6 +21,7 @@ function Play() {
                 <TeamBuilder format={format} onSave={setTeam} />
             )}
             {team && <CommitMatch team={team} />}
+            <Arena />
         </Stack>
     );
 }
