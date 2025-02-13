@@ -2,7 +2,7 @@ import { TeamSpecies } from "@/components/team";
 import { ActionIcon, Anchor, Button, Group, Stack } from "@mantine/core";
 import { PokemonSet } from "@pkmn/sets";
 import { TeamGenerators } from "@pkmn/randoms";
-import { IconBrandX } from "@tabler/icons-react";
+import { IconBrandX, IconMoodCrazyHappy } from "@tabler/icons-react";
 import { FC, useState } from "react";
 import { Dex, Format, PRNG, PRNGSeed } from "@pkmn/sim";
 
@@ -40,6 +40,7 @@ export const Teaser: FC = () => {
             </Group>
             <Group justify="center">
                 <Button
+                    leftSection={<IconMoodCrazyHappy />}
                     variant="gradient"
                     onClick={() => setTeam(randomTeam(DEFAULT_FORMAT))}
                     size="lg"

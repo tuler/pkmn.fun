@@ -5,6 +5,12 @@ import { Format, Teams, TeamValidator } from "@pkmn/sim";
 import { FC, useEffect, useState } from "react";
 import { TeamGenerators } from "@pkmn/randoms";
 import { TeamStats } from "./team_stats";
+import {
+    IconCheck,
+    IconClipboardText,
+    IconExternalLink,
+    IconMoodCrazyHappy,
+} from "@tabler/icons-react";
 
 export interface TeamBuilderProps {
     format: Format;
@@ -63,12 +69,14 @@ export const TeamBuilder: FC<TeamBuilderProps> = ({ format, onSave }) => {
         <Stack>
             <Group justify="center">
                 <Button
+                    leftSection={<IconMoodCrazyHappy />}
                     onClick={() => setTeam(generator.getTeam())}
                     variant="gradient"
                 >
                     I'm feeling lucky!
                 </Button>
                 <Button
+                    leftSection={<IconExternalLink />}
                     onClick={() =>
                         window.open(
                             "https://play.pokemonshowdown.com/teambuilder",
@@ -79,10 +87,15 @@ export const TeamBuilder: FC<TeamBuilderProps> = ({ format, onSave }) => {
                 >
                     Team Builder
                 </Button>
-                <Button onClick={() => importTeam()} variant="gradient">
+                <Button
+                    leftSection={<IconClipboardText />}
+                    onClick={() => importTeam()}
+                    variant="gradient"
+                >
                     Import Team
                 </Button>
                 <Button
+                    leftSection={<IconCheck />}
                     onClick={save}
                     variant="gradient"
                     disabled={!team || !!errors}
@@ -97,7 +110,7 @@ export const TeamBuilder: FC<TeamBuilderProps> = ({ format, onSave }) => {
             ))}
             {importOpen && (
                 <Textarea
-                    rows={10}
+                    rows={20}
                     ff="monospace"
                     placeholder='Paste here team export text and click "Import Team"'
                     value={importText}
