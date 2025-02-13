@@ -88,6 +88,20 @@ export default [
     },
     {
         type: "function",
+        name: "player1",
+        inputs: [],
+        outputs: [{ name: "", type: "address", internalType: "address" }],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "player2",
+        inputs: [],
+        outputs: [{ name: "", type: "address", internalType: "address" }],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
         name: "submitTeam1",
         inputs: [{ name: "teamData", type: "bytes", internalType: "bytes" }],
         outputs: [],
@@ -111,6 +125,20 @@ export default [
                 internalType: "contract ITaskIssuer",
             },
         ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "team1",
+        inputs: [],
+        outputs: [{ name: "", type: "bytes", internalType: "bytes" }],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "team2",
+        inputs: [],
+        outputs: [{ name: "", type: "bytes", internalType: "bytes" }],
         stateMutability: "view",
     },
     {
@@ -183,7 +211,7 @@ export default [
             },
         ],
     },
-    { type: "error", name: "SeatTaken", inputs: [] },
+    { type: "error", name: "PositionTaken", inputs: [] },
     {
         type: "error",
         name: "UnauthorizedCaller",

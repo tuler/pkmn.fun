@@ -6,10 +6,10 @@ import "../lib/coprocessor-base-contract/src/CoprocessorAdapter.sol";
 contract PKMNV2 is CoprocessorAdapter {
     string public constant FORMAT = "gen9ou";
 
-    address player1;
-    address player2;
-    bytes team1;
-    bytes team2;
+    address public player1;
+    address public player2;
+    bytes public team1;
+    bytes public team2;
 
     struct Battle {
         address player1;
@@ -24,7 +24,7 @@ contract PKMNV2 is CoprocessorAdapter {
     Battle[] public battles;
 
     // error if player tries to take a seat already taken
-    error SeatTaken();
+    error PositionTaken();
 
     // Track active matches per player
     constructor(
@@ -34,7 +34,7 @@ contract PKMNV2 is CoprocessorAdapter {
 
     function submitTeam1(bytes calldata teamData) external {
         if (player1 != address(0)) {
-            revert SeatTaken();
+            revert PositionTaken();
         }
         player1 = msg.sender;
         team1 = teamData;
@@ -43,7 +43,7 @@ contract PKMNV2 is CoprocessorAdapter {
 
     function submitTeam2(bytes calldata teamData) external {
         if (player2 != address(0)) {
-            revert SeatTaken();
+            revert PositionTaken();
         }
         player2 = msg.sender;
         team2 = teamData;
