@@ -36,7 +36,7 @@ contract PKMNV1 is CoprocessorAdapter {
 
     // Number of blocks players have to reveal their teams
     uint256 public constant REVEAL_DEADLINE_BLOCKS = 100; // 20 minutes in a 12 seconds interval chain
-    string public constant FORMAT = "gen7ubers";
+    string public constant FORMAT = "gen9ou";
 
     event MatchCreated(
         uint256 indexed matchId,
