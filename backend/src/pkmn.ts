@@ -1,3 +1,4 @@
+import { Protocol } from "@pkmn/protocol";
 import {
     BattleStreams,
     Dex,
@@ -103,15 +104,19 @@ export const simulate = async (
             // accumulate result to return
             log += chunk;
 
-            // parse winner
-            const m = chunk.match(/\|win\|p(\d)/);
-            if (m && m[1]) {
-                resolveFn({ winner: parseInt(m[1]), description: log });
-            }
+            for (const { args, kwArgs } of Protocol.parse(chunk)) {
+                // check if winner message
+                if (args[0] === "win") {
+                    resolveFn({
+                        winner: parseInt(args[1].charAt(1)),
+                        description: log,
+                    });
+                }
 
-            // parse tie
-            if (chunk.match(/\|tie$/)) {
-                resolveFn({ winner: 0, description: log });
+                // check if tie message
+                if (args[0] === "tie") {
+                    resolveFn({ winner: 0, description: log });
+                }
             }
         }
     })();

@@ -4,6 +4,7 @@
     "description": "pkmn.fun backend",
     "dependencies": {
         "@deroll/app": "^1.0.0",
+        "@pkmn/protocol": "^0.6.30",
         "@pkmn/randoms": "^0.9.28",
         "@pkmn/sim": "^0.9.28",
         "viem": "^2.22.23"

@@ -11,6 +11,9 @@ importers:
       '@deroll/app':
         specifier: ^1.0.0
         version: 1.0.0(typescript@5.7.3)
+      '@pkmn/protocol':
+        specifier: ^0.6.30
+        version: 0.6.30
       '@pkmn/randoms':
         specifier: ^0.9.28
         version: 0.9.29
@@ -372,6 +375,10 @@ packages:
   '@noble/hashes@1.7.1':
     resolution: {integrity: sha512-B8XBPsn4vT/KJAGqDzbwztd+6Yte3P4V7iafm24bxgDe/mlRuK6xmWPuCNrKt2vDafZ8MfJLlchDG/vYafQEjQ==}
     engines: {node: ^14.21.3 || >=16}
+
+  '@pkmn/protocol@0.6.30':
+    resolution: {integrity: sha512-QwkZqPT66kO4nbEOtR5VdKcsq28ntWuKehS1/ajSqpoWjO9B8odZfopSmQewfGay0paVE1vmWUx8qlyPKtj7tg==}
+    hasBin: true
 
   '@pkmn/randoms@0.9.29':
     resolution: {integrity: sha512-H+8fcKXMJDN5BlLIP69zqZDfKuXBjluHZwQ209/AVhNBztA+KWrW5IgwpNGKQcveotXyZsVxLMd/ZsVkTUAnUw==}
@@ -1537,6 +1544,10 @@ snapshots:
       '@noble/hashes': 1.7.1
 
   '@noble/hashes@1.7.1': {}
+
+  '@pkmn/protocol@0.6.30':
+    dependencies:
+      '@pkmn/types': 4.0.0
 
   '@pkmn/randoms@0.9.29':
     dependencies:
