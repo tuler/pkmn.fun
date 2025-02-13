@@ -3,8 +3,11 @@ import {
     Center,
     Drawer,
     Group,
+    Image,
     Overlay,
     Stack,
+    Text,
+    Textarea,
     useMantineColorScheme,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
@@ -16,6 +19,7 @@ import { TeamSpecies, UndefinedTeam } from "./team";
 import { AddressText } from "./address";
 import { SubmitTeam } from "./submit";
 import { TeamBuilder } from "./builder";
+import { TeamStats } from "./team_stats";
 
 interface ArenaPlayerProps {
     format: Format;
@@ -38,6 +42,8 @@ export const ArenaPlayer: FC<ArenaPlayerProps> = ({
         teamBuilderOpened,
         { open: openTeamBuilder, close: closeTeamBuilder },
     ] = useDisclosure(false);
+    const [teamViewerOpened, { open: openTeamViewer, close: closeTeamViewer }] =
+        useDisclosure(false);
 
     const onSave = (t: PokemonSet<string>[]) => {
         closeTeamBuilder(); // close team builder drawer
@@ -71,8 +77,16 @@ export const ArenaPlayer: FC<ArenaPlayerProps> = ({
 
             {player && player !== zeroAddress && team && team.length > 0 && (
                 <Stack>
-                    <AddressText address={player} />
                     <TeamSpecies team={team} />
+                    <Group justify="space-between">
+                        <Group gap={2}>
+                            <Image src="/img/hat.png" w={32} />
+                            <AddressText address={player} shorten={false} />
+                        </Group>
+                        <Button variant="subtle" onClick={openTeamViewer}>
+                            View Team
+                        </Button>
+                    </Group>
                 </Stack>
             )}
 
@@ -94,6 +108,14 @@ export const ArenaPlayer: FC<ArenaPlayerProps> = ({
                 position="right"
             >
                 <TeamBuilder format={format} onSave={onSave} />
+            </Drawer>
+            <Drawer
+                opened={teamViewerOpened}
+                onClose={closeTeamViewer}
+                offset={8}
+                position="right"
+            >
+                <TeamStats team={team} />
             </Drawer>
         </Stack>
     );

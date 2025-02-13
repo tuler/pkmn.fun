@@ -67,7 +67,7 @@ export const SubmitTeam: FC<SubmitTeamProps> = ({
         if (hash) {
             addRecentTransaction({
                 hash,
-                description: "Submitting team...",
+                description: `Submit Team ${teamNumber}`,
             });
         }
     }, [hash]);

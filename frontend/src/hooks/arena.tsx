@@ -1,7 +1,7 @@
 import { PokemonSet } from "@pkmn/sets";
 import { Dex, Format, Teams } from "@pkmn/sim";
 import { useEffect, useState } from "react";
-import { Address } from "viem";
+import { Address, hexToString } from "viem";
 import { useReadContracts } from "wagmi";
 import { pkmnv2Abi, pkmnv2Address } from "./contracts";
 
@@ -59,8 +59,8 @@ export const useArena = () => {
                 const format = Dex.formats.get(f.result);
                 const player1 = p1.result;
                 const player2 = p2.result;
-                const team1 = Teams.unpack(t1.result);
-                const team2 = Teams.unpack(t2.result);
+                const team1 = Teams.unpack(hexToString(t1.result));
+                const team2 = Teams.unpack(hexToString(t2.result));
                 setArena({
                     format,
                     player1,
