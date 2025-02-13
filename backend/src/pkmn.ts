@@ -79,8 +79,8 @@ export const simulate = async (
     team2.forEach((p) => (p.gender = "M"));
 
     const spec = { formatid: formatId };
-    const p1spec = { name: "p1", team: team1 };
-    const p2spec = { name: "p2", team: team2 };
+    const p1spec = { name: "p1", team: Teams.pack(team1) };
+    const p2spec = { name: "p2", team: Teams.pack(team2) };
 
     // initialize random seed
     // XXX: replace this with a seed coming from players
