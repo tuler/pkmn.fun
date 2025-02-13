@@ -10,8 +10,8 @@ const supportedMods = [
     "gen5",
     "gen6",
     "gen7",
-    //"gen8", // XXX: not working, 'global is not defined' error
-    //"gen9", // XXX: not working, 'global is not defined' error
+    "gen8",
+    "gen9",
 ];
 
 export const isRandomSupported = (format: Format): boolean => {

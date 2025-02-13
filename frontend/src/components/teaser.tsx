@@ -1,5 +1,4 @@
-import { isRandomSupported } from "@/components/formats";
-import { TeamComponent } from "@/components/team";
+import { TeamSpecies } from "@/components/team";
 import { ActionIcon, Anchor, Button, Group, Stack } from "@mantine/core";
 import { PokemonSet } from "@pkmn/sets";
 import { TeamGenerators } from "@pkmn/randoms";
@@ -7,7 +6,7 @@ import { IconBrandX } from "@tabler/icons-react";
 import { FC, useState } from "react";
 import { Dex, Format, PRNG, PRNGSeed } from "@pkmn/sim";
 
-const DEFAULT_FORMAT = Dex.formats.get("gen7randombattle");
+const DEFAULT_FORMAT = Dex.formats.get("gen9randombattle");
 
 const randomTeam = (
     format: Format,
@@ -18,7 +17,6 @@ const randomTeam = (
 };
 
 export const Teaser: FC = () => {
-    const [format, setFormat] = useState<Format>(DEFAULT_FORMAT);
     const [team, setTeam] = useState<PokemonSet<string>[] | undefined>(
         randomTeam(DEFAULT_FORMAT, PRNG.get(`sodium,0`)),
     );
@@ -40,17 +38,16 @@ export const Teaser: FC = () => {
                     </ActionIcon>
                 </Anchor>
             </Group>
-            <TeamComponent team={team} h={200} speciesOnly={true} />
             <Group justify="center">
                 <Button
                     variant="gradient"
-                    onClick={() => setTeam(randomTeam(format))}
-                    disabled={!isRandomSupported(format)}
+                    onClick={() => setTeam(randomTeam(DEFAULT_FORMAT))}
                     size="lg"
                 >
                     I'm feeling lucky!
                 </Button>
             </Group>
+            <TeamSpecies team={team} />
         </Stack>
     );
 };

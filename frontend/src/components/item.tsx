@@ -12,5 +12,9 @@ export const PokemonItem: FC<PokemonItemProps> = (props) => {
     const { name } = props;
     const { style } = Icons.getItem(name);
     const obj = parse(style);
+    if (obj && obj["image-rendering"]) {
+        obj.imageRendering = obj["image-rendering"];
+        delete obj["image-rendering"];
+    }
     return obj ? <span style={obj} /> : <></>;
 };

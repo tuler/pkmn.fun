@@ -4,8 +4,9 @@ import { FC } from "react";
 import { PokemonSet } from "@pkmn/sets";
 import { Flex, FlexProps, StyleProp } from "@mantine/core";
 import { Pokemon } from "./pokemon";
+import { PokemonStats } from "./pokemon_stats";
 
-export interface TeamSpeciesProps extends FlexProps {
+export interface TeamStatsProps extends FlexProps {
     team?: PokemonSet<string>[] | null;
 }
 
@@ -24,7 +25,7 @@ const oppositeDirection = (direction?: FlexDirection) => {
     return undefined;
 };
 
-export const TeamSpecies: FC<TeamSpeciesProps> = (props) => {
+export const TeamStats: FC<TeamStatsProps> = (props) => {
     const { team, ...otherProps } = props;
     const direction = props.direction ?? "row";
     const align = direction === "row" ? "flex-end" : "flex-start";
@@ -36,14 +37,17 @@ export const TeamSpecies: FC<TeamSpeciesProps> = (props) => {
             {...otherProps}
             direction={direction}
             wrap="wrap"
+            // bg="cyan"
         >
             {team?.map((pk, index) => (
                 <Flex
                     direction={oppositeDirection(direction)}
                     align="center"
                     key={index}
+                    // bg="yellow"
                 >
                     <Pokemon key={index} name={pk.name || pk.species} />
+                    <PokemonStats pokemon={pk} />
                 </Flex>
             ))}
         </Flex>

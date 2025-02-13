@@ -2,9 +2,9 @@ import { Alert, Button, Group, Stack, Textarea } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { PokemonSet } from "@pkmn/sets";
 import { Format, Teams, TeamValidator } from "@pkmn/sim";
-import { FC, useState } from "react";
-import { TeamComponent } from "./team";
+import { FC, useEffect, useState } from "react";
 import { TeamGenerators } from "@pkmn/randoms";
+import { TeamStats } from "./team_stats";
 
 export interface TeamBuilderProps {
     format: Format;
@@ -21,15 +21,18 @@ export const TeamBuilder: FC<TeamBuilderProps> = ({ format, onSave }) => {
     const [importOpen, { toggle: toggleImport }] = useDisclosure();
     const [importText, setImportText] = useState<string>();
 
-    // validator and generator for given format
+    // validator and generator for the given format
     const validator = TeamValidator.get(format);
     const generator = TeamGenerators.getTeamGenerator(
         getRandomFormatFor(format),
     );
 
-    const validateTeam = () => {
-        setErrors(validator.validateTeam(team));
-    };
+    // team validation
+    useEffect(() => {
+        if (team) {
+            setErrors(validator.validateTeam(team));
+        }
+    }, [team]);
 
     const importTeam = () => {
         if (importOpen && importText) {
@@ -50,25 +53,19 @@ export const TeamBuilder: FC<TeamBuilderProps> = ({ format, onSave }) => {
         }
     };
 
-    const randomTeam = () => {
-        setTeam(generator.getTeam());
-        validateTeam();
-    };
-
     const save = () => {
-        // onSave(team);
+        if (team) {
+            onSave(team);
+        }
     };
 
     return (
         <Stack>
-            {errors?.map((error, index) => (
-                <Alert key={index} color="red">
-                    {error}
-                </Alert>
-            ))}
             <Group justify="center">
-                <TeamComponent team={team} speciesOnly={false} />
-                <Button onClick={() => randomTeam()} variant="gradient">
+                <Button
+                    onClick={() => setTeam(generator.getTeam())}
+                    variant="gradient"
+                >
                     I'm feeling lucky!
                 </Button>
                 <Button
@@ -85,10 +82,19 @@ export const TeamBuilder: FC<TeamBuilderProps> = ({ format, onSave }) => {
                 <Button onClick={() => importTeam()} variant="gradient">
                     Import Team
                 </Button>
-                <Button onClick={save} variant="gradient">
+                <Button
+                    onClick={save}
+                    variant="gradient"
+                    disabled={!team || !!errors}
+                >
                     Save
                 </Button>
             </Group>
+            {errors?.map((error, index) => (
+                <Alert key={index} color="red">
+                    {error}
+                </Alert>
+            ))}
             {importOpen && (
                 <Textarea
                     rows={10}
@@ -98,6 +104,7 @@ export const TeamBuilder: FC<TeamBuilderProps> = ({ format, onSave }) => {
                     onChange={(e) => setImportText(e.target.value)}
                 />
             )}
+            <TeamStats team={team} />
         </Stack>
     );
 };

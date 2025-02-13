@@ -14,7 +14,7 @@ import { IconExclamationCircle } from "@tabler/icons-react";
 import { FC, useEffect } from "react";
 import { keccak256, toHex } from "viem";
 import { useAccount, useWaitForTransactionReceipt } from "wagmi";
-import { TeamComponent } from "./team";
+import { TeamStats } from "./team_stats";
 import { TransactionHash } from "./txhash";
 import { useWritePkmnv1CommitTeam } from "@/hooks/contracts";
 
@@ -65,7 +65,7 @@ export const CommitMatch: FC<CommitMatchProps> = ({ team }) => {
                     />
                 </Alert>
             )}
-            <TeamComponent team={team} />
+            <TeamStats team={team} />
             <Group justify="center">
                 {isConnected && (
                     <Button
