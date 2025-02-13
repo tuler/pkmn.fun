@@ -2,6 +2,7 @@ import { Protocol } from "@pkmn/protocol";
 import {
     BattleStreams,
     Dex,
+    PRNG,
     RandomPlayerAI,
     Teams,
     TeamValidator,
@@ -73,57 +74,54 @@ export const simulate = async (
         };
     }
 
+    // XXX: reset pokemon gender to M, otherwise simulation assign random genders
+    team1.forEach((p) => (p.gender = "M"));
+    team2.forEach((p) => (p.gender = "M"));
+
     const spec = { formatid: formatId };
     const p1spec = { name: "p1", team: team1 };
     const p2spec = { name: "p2", team: team2 };
 
+    // initialize random seed
+    // XXX: replace this with a seed coming from players
+    const seed = PRNG.get("0,0,0,0");
+
     // instantiate random AI players
     // XXX: replace this with smarter players
-    const p1 = new RandomPlayerAI(streams.p1);
-    const p2 = new RandomPlayerAI(streams.p2);
+    const p1 = new RandomPlayerAI(streams.p1, { seed });
+    const p2 = new RandomPlayerAI(streams.p2, { seed });
 
-    // simulate battle
-    void p1.start();
-    void p2.start();
+    return new Promise<SimulationResult>((resolve, _reject) => {
+        let log = "";
 
-    let log = "";
-    let resolveFn = (
-        value: SimulationResult | PromiseLike<SimulationResult>
-    ) => {};
-    let rejectFn = (reason?: any) => {};
+        // simulate battle
+        void p1.start();
+        void p2.start();
 
-    const result = new Promise<SimulationResult>((resolve, reject) => {
-        resolveFn = resolve;
-        rejectFn = reject;
-    });
+        void (async () => {
+            for await (const chunk of streams.omniscient) {
+                // accumulate result to return
+                log += chunk;
 
-    void (async () => {
-        for await (const chunk of streams.omniscient) {
-            console.log(chunk);
+                for (const { args, kwArgs } of Protocol.parse(chunk)) {
+                    // check if winner message
+                    if (args[0] === "win") {
+                        resolve({
+                            winner: parseInt(args[1].charAt(1)),
+                            description: log,
+                        });
+                    }
 
-            // accumulate result to return
-            log += chunk;
-
-            for (const { args, kwArgs } of Protocol.parse(chunk)) {
-                // check if winner message
-                if (args[0] === "win") {
-                    resolveFn({
-                        winner: parseInt(args[1].charAt(1)),
-                        description: log,
-                    });
-                }
-
-                // check if tie message
-                if (args[0] === "tie") {
-                    resolveFn({ winner: 0, description: log });
+                    // check if tie message
+                    if (args[0] === "tie") {
+                        resolve({ winner: 0, description: log });
+                    }
                 }
             }
-        }
-    })();
+        })();
 
-    void streams.omniscient.write(`>start ${JSON.stringify(spec)}
+        void streams.omniscient.write(`>start ${JSON.stringify(spec)}
 >player p1 ${JSON.stringify(p1spec)}
 >player p2 ${JSON.stringify(p2spec)}`);
-
-    return result;
+    });
 };

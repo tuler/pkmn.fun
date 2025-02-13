@@ -31,6 +31,9 @@ app.addAdvanceHandler(async (data) => {
         player2Team
     );
 
+    // debug of battle
+    console.log(description);
+
     // create a notice with the expected match outcome
     await app.createNotice({
         payload: encodeAbiParameters(

@@ -1,0 +1,279 @@
+|t:|1739461077
+|gametype|singles
+|player|p1|p1||
+|player|p2|p2||
+|teamsize|p1|6
+|teamsize|p2|6
+|gen|9
+|tier|[Gen 9] OU
+|rule|Species Clause: Limit one of each Pokémon
+|rule|OHKO Clause: OHKO moves are banned
+|rule|Evasion Items Clause: Evasion items are banned
+|rule|Evasion Moves Clause: Evasion moves are banned
+|rule|Endless Battle Clause: Forcing endless battles is banned
+|rule|HP Percentage Mod: HP is shown in percentages
+|rule|Sleep Clause: Sleep-inducing moves are banned
+|clearpoke
+|poke|p1|Kyurem, M|
+|poke|p1|Ting-Lu, M|
+|poke|p1|Corviknight, M|
+|poke|p1|Weezing-Galar, M|
+|poke|p1|Zamazenta-*, M|
+|poke|p1|Toxapex, M|
+|poke|p2|Glimmora, M|
+|poke|p2|Zamazenta-*, M|
+|poke|p2|Latias, M|
+|poke|p2|Gholdengo, M|
+|poke|p2|Dragonite, M|
+|poke|p2|Weavile, M|
+|teampreview|
+|t:|1739461077
+|start
+|switch|p1a: Kyotaro|Kyurem, M, shiny|405/405
+|switch|p2a: Glimmora|Glimmora, M|370/370
+|-ability|p1a: Kyotaro|Pressure
+|turn|1|
+|t:|1739461077
+|move|p1a: Kyotaro|Protect|p1a: Kyotaro
+|-singleturn|p1a: Kyotaro|Protect
+|move|p2a: Glimmora|Power Gem|p1a: Kyotaro
+|-activate|p1a: Kyotaro|move: Protect
+|
+|upkeep
+|turn|2|
+|t:|1739461077
+|move|p1a: Kyotaro|Substitute|p1a: Kyotaro
+|-start|p1a: Kyotaro|Substitute
+|-damage|p1a: Kyotaro|304/405
+|move|p2a: Glimmora|Power Gem|p1a: Kyotaro
+|-supereffective|p1a: Kyotaro
+|-end|p1a: Kyotaro|Substitute
+|
+|-heal|p1a: Kyotaro|329/405|[from] item: Leftovers
+|upkeep
+|turn|3|
+|t:|1739461077
+|move|p1a: Kyotaro|Protect|p1a: Kyotaro
+|-singleturn|p1a: Kyotaro|Protect
+|move|p2a: Glimmora|Power Gem|p1a: Kyotaro
+|-activate|p1a: Kyotaro|move: Protect
+|
+|-heal|p1a: Kyotaro|354/405|[from] item: Leftovers
+|upkeep
+|turn|4|
+|t:|1739461077
+|move|p1a: Kyotaro|Substitute|p1a: Kyotaro
+|-start|p1a: Kyotaro|Substitute
+|-damage|p1a: Kyotaro|253/405
+|move|p2a: Glimmora|Stealth Rock|p1a: Kyotaro
+|-sidestart|p1: p1|move: Stealth Rock
+|
+|-heal|p1a: Kyotaro|278/405|[from] item: Leftovers
+|upkeep
+|turn|5|
+|t:|1739461077
+|move|p1a: Kyotaro|Freeze-Dry|p2a: Glimmora
+|-damage|p2a: Glimmora|253/370
+|-enditem|p2a: Glimmora|Red Card|[of] p1a: Kyotaro
+|drag|p1a: Goliath|Ting-Lu, M|513/513
+|-damage|p1a: Goliath|481/513|[from] Stealth Rock
+|-ability|p1a: Goliath|Vessel of Ruin
+|move|p2a: Glimmora|Earth Power|p1a: Goliath
+|-damage|p1a: Goliath|422/513
+|-unboost|p1a: Goliath|spd|1
+|
+|-heal|p1a: Goliath|454/513|[from] item: Leftovers
+|upkeep
+|turn|6|
+|t:|1739461077
+|move|p2a: Glimmora|Earth Power|p1a: Goliath
+|-damage|p1a: Goliath|365/513
+|move|p1a: Goliath|Rest|p1a: Goliath
+|-status|p1a: Goliath|slp|[from] move: Rest
+|-heal|p1a: Goliath|513/513 slp|[silent]
+|
+|upkeep
+|turn|7|
+|t:|1739461077
+|move|p2a: Glimmora|Spikes|p1a: Goliath
+|-sidestart|p1: p1|Spikes
+|cant|p1a: Goliath|slp
+|
+|upkeep
+|turn|8|
+|t:|1739461077
+|move|p2a: Glimmora|Power Gem|p1a: Goliath
+|-resisted|p1a: Goliath
+|-crit|p1a: Goliath
+|-damage|p1a: Goliath|425/513 slp
+|cant|p1a: Goliath|slp
+|
+|-heal|p1a: Goliath|457/513 slp|[from] item: Leftovers
+|upkeep
+|turn|9|
+|t:|1739461077
+|move|p2a: Glimmora|Power Gem|p1a: Goliath
+|-resisted|p1a: Goliath
+|-damage|p1a: Goliath|400/513 slp
+|-curestatus|p1a: Goliath|slp|[msg]
+|move|p1a: Goliath|Ruination|p2a: Glimmora|[miss]
+|-miss|p1a: Goliath|p2a: Glimmora
+|
+|-heal|p1a: Goliath|432/513|[from] item: Leftovers
+|upkeep
+|turn|10|
+|t:|1739461077
+|move|p2a: Glimmora|Spikes|p1a: Goliath
+|-sidestart|p1: p1|Spikes
+|move|p1a: Goliath|Earthquake|p2a: Glimmora
+|-supereffective|p2a: Glimmora
+|-damage|p2a: Glimmora|0 fnt
+|-activate|p2a: Glimmora|ability: Toxic Debris
+|-sidestart|p1: p1|move: Toxic Spikes
+|faint|p2a: Glimmora
+|
+|-heal|p1a: Goliath|464/513|[from] item: Leftovers
+|upkeep|
+|t:|1739461077
+|switch|p2a: Gholdengo|Gholdengo, M|363/363
+|turn|11|
+|t:|1739461077
+|move|p2a: Gholdengo|Shadow Ball|p1a: Goliath
+|-resisted|p1a: Goliath
+|-damage|p1a: Goliath|394/513
+|move|p1a: Goliath|Ruination|p2a: Gholdengo
+|-damage|p2a: Gholdengo|182/363
+|
+|-heal|p1a: Goliath|426/513|[from] item: Leftovers
+|upkeep
+|turn|12|
+|t:|1739461077
+|move|p2a: Gholdengo|Shadow Ball|p1a: Goliath
+|-resisted|p1a: Goliath
+|-damage|p1a: Goliath|363/513
+|move|p1a: Goliath|Rest|p1a: Goliath
+|-status|p1a: Goliath|slp|[from] move: Rest
+|-heal|p1a: Goliath|513/513 slp|[silent]
+|
+|upkeep
+|turn|13|
+|t:|1739461077
+|move|p2a: Gholdengo|Dazzling Gleam|p1a: Goliath
+|-supereffective|p1a: Goliath
+|-damage|p1a: Goliath|331/513 slp
+|cant|p1a: Goliath|slp
+|
+|-heal|p1a: Goliath|363/513 slp|[from] item: Leftovers
+|upkeep
+|turn|14|
+|t:|1739461077
+|move|p2a: Gholdengo|Nasty Plot|p2a: Gholdengo
+|-boost|p2a: Gholdengo|spa|2
+|cant|p1a: Goliath|slp
+|
+|-heal|p1a: Goliath|395/513 slp|[from] item: Leftovers
+|upkeep
+|turn|15|
+|t:|1739461077
+|move|p2a: Gholdengo|Shadow Ball|p1a: Goliath
+|-resisted|p1a: Goliath
+|-damage|p1a: Goliath|269/513 slp
+|-unboost|p1a: Goliath|spd|1
+|-curestatus|p1a: Goliath|slp|[msg]
+|move|p1a: Goliath|Rest|p1a: Goliath
+|-status|p1a: Goliath|slp|[from] move: Rest
+|-heal|p1a: Goliath|513/513 slp|[silent]
+|
+|upkeep
+|turn|16|
+|t:|1739461077
+|move|p2a: Gholdengo|Dazzling Gleam|p1a: Goliath
+|-supereffective|p1a: Goliath
+|-damage|p1a: Goliath|39/513 slp
+|cant|p1a: Goliath|slp
+|
+|-heal|p1a: Goliath|71/513 slp|[from] item: Leftovers
+|upkeep
+|turn|17|
+|t:|1739461077
+|move|p2a: Gholdengo|Dazzling Gleam|p1a: Goliath
+|-supereffective|p1a: Goliath
+|-damage|p1a: Goliath|0 fnt
+|faint|p1a: Goliath
+|
+|upkeep|
+|t:|1739461077
+|switch|p1a: Kyotaro|Kyurem, M, shiny|278/405
+|-damage|p1a: Kyotaro|177/405|[from] Stealth Rock
+|-damage|p1a: Kyotaro|110/405|[from] Spikes
+|-status|p1a: Kyotaro|psn
+|-ability|p1a: Kyotaro|Pressure
+|turn|18|
+|t:|1739461077
+|move|p1a: Kyotaro|Freeze-Dry|p2a: Gholdengo
+|-resisted|p2a: Gholdengo
+|-damage|p2a: Gholdengo|114/363
+|move|p2a: Gholdengo|Thunderbolt|p1a: Kyotaro
+|-resisted|p1a: Kyotaro
+|-damage|p1a: Kyotaro|0 fnt
+|faint|p1a: Kyotaro
+|
+|upkeep|
+|t:|1739461077
+|switch|p1a: Yami|Corviknight, M, shiny|399/399
+|-damage|p1a: Yami|350/399|[from] Stealth Rock
+|-ability|p1a: Yami|Pressure
+|turn|19|
+|t:|1739461077
+|move|p2a: Gholdengo|Thunderbolt|p1a: Yami
+|-supereffective|p1a: Yami
+|-damage|p1a: Yami|0 fnt
+|faint|p1a: Yami
+|
+|upkeep|
+|t:|1739461077
+|switch|p1a: Sentinel|Weezing-Galar, M, shiny|333/333
+|-ability|p1a: Sentinel|Neutralizing Gas
+|-sideend|p1: p1|move: Toxic Spikes|[of] p1a: Sentinel
+|turn|20|
+|t:|1739461077
+|move|p2a: Gholdengo|Shadow Ball|p1a: Sentinel
+|-damage|p1a: Sentinel|0 fnt
+|faint|p1a: Sentinel
+|-end|p1a: Sentinel|ability: Neutralizing Gas
+|
+|upkeep|
+|t:|1739461077
+|switch|p1a: Serpentine|Toxapex, M, shiny|303/303
+|-damage|p1a: Serpentine|266/303|[from] Stealth Rock
+|-damage|p1a: Serpentine|216/303|[from] Spikes
+|turn|21|
+|t:|1739461077
+|move|p2a: Gholdengo|Nasty Plot|p2a: Gholdengo
+|-boost|p2a: Gholdengo|spa|2
+|move|p1a: Serpentine|Acid Spray|p2a: Gholdengo
+|-immune|p2a: Gholdengo
+|
+|upkeep
+|turn|22|
+|t:|1739461077
+|move|p2a: Gholdengo|Shadow Ball|p1a: Serpentine
+|-damage|p1a: Serpentine|0 fnt
+|faint|p1a: Serpentine
+|
+|upkeep|
+|t:|1739461077
+|switch|p1a: Trojan|Zamazenta, M, shiny|325/325
+|-damage|p1a: Trojan|305/325|[from] Stealth Rock
+|-damage|p1a: Trojan|251/325|[from] Spikes
+|-ability|p1a: Trojan|Dauntless Shield|boost
+|-boost|p1a: Trojan|def|1
+|turn|23|
+|t:|1739461077
+|move|p1a: Trojan|Close Combat|p2a: Gholdengo
+|-immune|p2a: Gholdengo
+|move|p2a: Gholdengo|Shadow Ball|p1a: Trojan
+|-damage|p1a: Trojan|0 fnt
+|faint|p1a: Trojan
+|
+|win|p2
