@@ -1,0 +1,121 @@
+import { FC, useEffect } from "react";
+import { PokemonSet } from "@pkmn/sets";
+import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
+import { Teams } from "@pkmn/sim";
+import {
+    useWaitForTransactionReceipt,
+    useWriteContract,
+    useSimulateContract,
+} from "wagmi";
+import {
+    Alert,
+    Button,
+    Group,
+    Loader,
+    Overlay,
+    Stack,
+    Text,
+    Textarea,
+    useMantineColorScheme,
+} from "@mantine/core";
+import { IconExclamationCircle } from "@tabler/icons-react";
+import { TransactionHash } from "./txhash";
+import { pkmnv2Abi, pkmnv2Address } from "@/hooks/contracts";
+import { stringToHex } from "viem";
+import { TeamSpecies } from "./team";
+
+interface SubmitTeamProps {
+    teamNumber: 1 | 2;
+    team: PokemonSet<string>[];
+}
+
+export const SubmitTeam: FC<SubmitTeamProps> = ({ teamNumber, team }) => {
+    const { colorScheme } = useMantineColorScheme();
+    const addRecentTransaction = useAddRecentTransaction();
+    const packed = Teams.pack(team);
+
+    const {
+        data: hash,
+        error,
+        isPending,
+        writeContract: submitTeam,
+    } = useWriteContract();
+
+    const { data: simulateData } = useSimulateContract({
+        abi: pkmnv2Abi,
+        address: pkmnv2Address,
+        functionName: `submitTeam${teamNumber}`,
+        args: [stringToHex(packed)],
+    });
+
+    const { isLoading: isConfirming, isSuccess: isConfirmed } =
+        useWaitForTransactionReceipt({
+            hash,
+        });
+
+    const handleSubmit = () => {
+        if (!simulateData?.request) return;
+        submitTeam(simulateData.request);
+    };
+
+    useEffect(() => {
+        if (hash) {
+            addRecentTransaction({
+                hash,
+                description: "Submitting team...",
+            });
+        }
+    }, [hash]);
+
+    return (
+        <Stack>
+            {error && (
+                <Alert
+                    icon={<IconExclamationCircle />}
+                    variant="light"
+                    color="red"
+                    title={error.name}
+                >
+                    <Textarea
+                        readOnly
+                        rows={5}
+                        value={error.message}
+                        variant="unstyled"
+                    />
+                </Alert>
+            )}
+            <Group pos="relative">
+                <TeamSpecies team={team} />
+                <Overlay
+                    color={colorScheme === "light" ? "#fff" : "#000"}
+                    backgroundOpacity={0.6}
+                >
+                    <Group justify="center" h="100%">
+                        <Button
+                            onClick={handleSubmit}
+                            variant="gradient"
+                            disabled={!submitTeam || isPending || !simulateData}
+                        >
+                            {isPending ? "Confirming..." : "Submit"}
+                        </Button>
+                    </Group>
+                </Overlay>
+            </Group>
+            <Stack gap={0}>
+                {hash && (
+                    <Group gap={2}>
+                        <Text>tx: </Text>
+                        <TransactionHash hash={hash} />
+                    </Group>
+                )}
+                {isConfirming && (
+                    <Group gap={5}>
+                        <Loader size="xs" />
+                        <Text>Waiting for confirmation...</Text>
+                    </Group>
+                )}
+                {isConfirmed && <Text c="teal">Transaction confirmed.</Text>}
+            </Stack>
+        </Stack>
+    );
+};

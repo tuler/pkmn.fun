@@ -83,7 +83,7 @@ export const UndefinedTeam: FC<UndefinedTeamProps> = (props) => {
                     align="center"
                     key={index}
                 >
-                    <Image src={"/img/pikachu_silhouette.png"} w={150} />
+                    <Image src={"/img/pikachu_silhouette.png"} w={100} />
                 </Flex>
             ))}
         </Flex>

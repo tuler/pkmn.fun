@@ -6,20 +6,26 @@ import {
     Group,
     Overlay,
     Stack,
+    Text,
     Title,
     useMantineColorScheme,
 } from "@mantine/core";
-import { FC } from "react";
+import { FC, useState } from "react";
 import { TeamSpecies, UndefinedTeam } from "./team";
 import { AddressText } from "./address";
 import { useDisclosure } from "@mantine/hooks";
 import { TeamBuilder } from "./builder";
+import { PokemonSet } from "@pkmn/sets";
+import { SubmitTeam } from "./submit";
+import { zeroAddress } from "viem";
 
 export const Arena: FC = () => {
+    const [team, setTeam] = useState<PokemonSet<string>[] | undefined>([]);
     const { arena } = useArena();
     const { format, player1, player2, team1, team2 } = arena || {};
     const { colorScheme } = useMantineColorScheme();
 
+    // control for side drawer
     const [
         teamBuilderOpened,
         {
@@ -32,7 +38,14 @@ export const Arena: FC = () => {
     const play1 = () => {
         toggleTeamBuilder();
     };
-    const play2 = () => {};
+    const play2 = () => {
+        toggleTeamBuilder();
+    };
+
+    const onSave = (t: PokemonSet<string>[]) => {
+        closeTeamBuilder(); // close team builder drawer
+        setTeam(t);
+    };
 
     return (
         <Stack align="center" gap={50}>
@@ -58,12 +71,17 @@ export const Arena: FC = () => {
                     </Overlay>
                 </Group>
             )}
-            {player1 && team1 && (
+            {player1 && player1 !== zeroAddress && team1 && (
                 <Stack>
                     <AddressText address={player1} />
                     <TeamSpecies team={team1} />
                 </Stack>
             )}
+
+            {(!player1 || player1 === zeroAddress) &&
+                !team1 &&
+                team &&
+                team?.length > 0 && <SubmitTeam teamNumber={1} team={team} />}
 
             <Title order={2}>vs</Title>
 
@@ -95,7 +113,7 @@ export const Arena: FC = () => {
                     offset={8}
                     position="right"
                 >
-                    <TeamBuilder format={format} onSave={(team) => {}} />
+                    <TeamBuilder format={format} onSave={onSave} />
                 </Drawer>
             )}
         </Stack>
