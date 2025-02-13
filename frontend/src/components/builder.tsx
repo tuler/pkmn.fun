@@ -1,4 +1,4 @@
-import { Alert, Button, Group, Stack, Textarea } from "@mantine/core";
+import { Alert, NavLink, Stack, Textarea } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { PokemonSet } from "@pkmn/sets";
 import { Format, Teams, TeamValidator } from "@pkmn/sim";
@@ -9,6 +9,7 @@ import {
     IconCheck,
     IconClipboardText,
     IconExternalLink,
+    IconGeometry,
     IconMoodCrazyHappy,
 } from "@tabler/icons-react";
 
@@ -67,47 +68,49 @@ export const TeamBuilder: FC<TeamBuilderProps> = ({ format, onSave }) => {
 
     return (
         <Stack>
-            <Group justify="center">
-                <Button
-                    leftSection={<IconMoodCrazyHappy />}
+            <Stack gap={0}>
+                <NavLink
+                    label="I'm feeling lucky!"
+                    variant="subtle"
+                    active
                     onClick={() => setTeam(generator.getTeam())}
-                    variant="gradient"
-                >
-                    I'm feeling lucky!
-                </Button>
-                <Button
-                    leftSection={<IconExternalLink />}
+                    leftSection={<IconMoodCrazyHappy />}
+                />
+                <NavLink
+                    label="Team Builder"
+                    variant="subtle"
                     onClick={() =>
                         window.open(
                             "https://play.pokemonshowdown.com/teambuilder",
                             "_blank",
                         )
                     }
-                    variant="gradient"
-                >
-                    Team Builder
-                </Button>
-                <Button
+                    active
+                    leftSection={<IconGeometry />}
+                    rightSection={<IconExternalLink />}
+                />
+                <NavLink
+                    label={
+                        importOpen && importText !== ""
+                            ? "Import"
+                            : "Import Team"
+                    }
+                    variant={
+                        importOpen && importText !== "" ? "filled" : "subtle"
+                    }
+                    onClick={importTeam}
+                    active
                     leftSection={<IconClipboardText />}
-                    onClick={() => importTeam()}
-                    variant="gradient"
-                >
-                    Import Team
-                </Button>
-                <Button
-                    leftSection={<IconCheck />}
+                />
+                <NavLink
+                    label="Save"
+                    variant="filled"
                     onClick={save}
-                    variant="gradient"
+                    active
                     disabled={!team || !!errors}
-                >
-                    Save
-                </Button>
-            </Group>
-            {errors?.map((error, index) => (
-                <Alert key={index} color="red">
-                    {error}
-                </Alert>
-            ))}
+                    leftSection={<IconCheck />}
+                />
+            </Stack>
             {importOpen && (
                 <Textarea
                     rows={20}
@@ -117,6 +120,11 @@ export const TeamBuilder: FC<TeamBuilderProps> = ({ format, onSave }) => {
                     onChange={(e) => setImportText(e.target.value)}
                 />
             )}
+            {errors?.map((error, index) => (
+                <Alert key={index} color="red">
+                    {error}
+                </Alert>
+            ))}
             <TeamStats team={team} />
         </Stack>
     );

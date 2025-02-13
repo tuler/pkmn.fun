@@ -2,6 +2,7 @@ import { useArena } from "@/hooks/arena";
 import {
     Button,
     Center,
+    Drawer,
     Group,
     Overlay,
     Stack,
@@ -11,13 +12,26 @@ import {
 import { FC } from "react";
 import { TeamSpecies, UndefinedTeam } from "./team";
 import { AddressText } from "./address";
+import { useDisclosure } from "@mantine/hooks";
+import { TeamBuilder } from "./builder";
 
 export const Arena: FC = () => {
     const { arena } = useArena();
     const { format, player1, player2, team1, team2 } = arena || {};
     const { colorScheme } = useMantineColorScheme();
 
-    const play1 = () => {};
+    const [
+        teamBuilderOpened,
+        {
+            open: openTeamBuilder,
+            close: closeTeamBuilder,
+            toggle: toggleTeamBuilder,
+        },
+    ] = useDisclosure(false);
+
+    const play1 = () => {
+        toggleTeamBuilder();
+    };
     const play2 = () => {};
 
     return (
@@ -73,6 +87,16 @@ export const Arena: FC = () => {
                     <AddressText address={player2} />
                     <TeamSpecies team={team2} />
                 </Stack>
+            )}
+            {format && (
+                <Drawer
+                    opened={teamBuilderOpened}
+                    onClose={closeTeamBuilder}
+                    offset={8}
+                    position="right"
+                >
+                    <TeamBuilder format={format} onSave={(team) => {}} />
+                </Drawer>
             )}
         </Stack>
     );
