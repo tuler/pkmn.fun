@@ -33,6 +33,7 @@ contract PKMNV1 is CoprocessorAdapter {
     }
 
     Match[] public matches;
+    mapping(bytes32 => uint256) matchIds;
 
     // Number of blocks players have to reveal their teams
     uint256 public constant REVEAL_DEADLINE_BLOCKS = 100; // 20 minutes in a 12 seconds interval chain
@@ -176,29 +177,30 @@ contract PKMNV1 is CoprocessorAdapter {
 
             // Call coprocessor to simulate battle
             bytes memory input = abi.encode(
-                matchId,
                 FORMAT,
                 gameMatch.player1TeamData,
                 gameMatch.player2TeamData
             );
             bytes32 inputHash = keccak256(input);
             computationSent[inputHash] = true;
+            matchIds[inputHash] = matchId;
             taskIssuer.issueTask(machineHash, input, address(this));
         }
     }
 
     function handleNotice(
-        bytes32 /* _payloadHash */,
+        bytes32 _payloadHash,
         bytes memory notice
     ) internal override {
         // Add logic for handling callback from co-processor containing notices.
 
         // notice is ABI encoded with matchId, winner (0, 1, 2), and match description
-        (uint256 matchId, uint8 winner, bytes memory description) = abi.decode(
+        (uint8 winner, bytes memory description) = abi.decode(
             notice,
-            (uint256, uint8, bytes)
+            (uint8, bytes)
         );
 
+        uint256 matchId = matchIds[_payloadHash];
         Match storage gameMatch = matches[matchId];
 
         // Update match state
