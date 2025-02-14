@@ -1,24 +1,51 @@
-import { Stack, Title } from "@mantine/core";
-import { FC } from "react";
+import { Pagination, Stack, Title } from "@mantine/core";
+import { FC, useState } from "react";
 import { useBattle } from "@/hooks/battle";
 import { BattleTagline } from "./battle/tagline";
 import { useReadPkmnSimpleArenaGetBattleCount } from "@/hooks/contracts";
 
+/**
+ * Chunk an array into smaller arrays of a given size.
+ * @param array The array to chunk.
+ * @param size The size of the chunks.
+ * @returns An array of chunks.
+ */
+function chunk<T>(array: T[], size: number): T[][] {
+    if (!array.length) {
+        return [];
+    }
+    const head = array.slice(0, size);
+    const tail = array.slice(size);
+    return [head, ...chunk(tail, size)];
+}
+
+const BattleHistoryItem: FC<{ id: number }> = ({ id }) => {
+    const { battle } = useBattle(id);
+    return battle ? <BattleTagline key={id} id={id} battle={battle} /> : <></>;
+};
+
 export const BattleHistory: FC = () => {
     const { data: battleCount } = useReadPkmnSimpleArenaGetBattleCount();
-    const { battle } = useBattle(0);
-    const battles = [battle].filter((b) => !!b);
-
+    const pages = chunk(
+        Array.from({ length: Number(battleCount ?? 0) }, (_, i) => i),
+        10,
+    );
+    const [activePage, setPage] = useState(1);
+    const battleIds = pages[activePage - 1];
     return (
         <Stack gap={0} align="center">
-            {battleCount !== undefined && battleCount > 0 && (
+            {battleIds?.length > 0 && (
                 <Title order={4} c="dimmed">
                     Past Battles
                 </Title>
             )}
-            {battles.map((b, index) => (
-                <BattleTagline key={index} id={0} battle={b} />
-            ))}
+            {battleIds?.map((id) => <BattleHistoryItem key={id} id={0} />)}
+            <Pagination
+                total={pages.length}
+                value={activePage}
+                onChange={setPage}
+                mt="sm"
+            />
         </Stack>
     );
 };

@@ -1,8 +1,8 @@
-import { Address, hexToString } from "viem";
-import { useReadPkmnSimpleArenaBattles } from "./contracts";
 import { PokemonSet } from "@pkmn/sets";
-import { useEffect, useState } from "react";
 import { Teams } from "@pkmn/sim";
+import { Address, hexToString } from "viem";
+import { useEffect, useState } from "react";
+import { useReadPkmnSimpleArenaBattles } from "./contracts";
 
 export type Battle = {
     player1: Address;
