@@ -19,10 +19,10 @@ import {
     useMantineColorScheme,
 } from "@mantine/core";
 import { IconExclamationCircle } from "@tabler/icons-react";
-import { TransactionHash } from "./txhash";
+import { TransactionHash } from "./web3/txhash";
 import { pkmnv2Abi, pkmnv2Address } from "@/hooks/contracts";
 import { stringToHex } from "viem";
-import { TeamSpecies } from "./team";
+import { TeamSpecies } from "./team/species";
 
 interface SubmitTeamProps {
     teamNumber: 1 | 2;

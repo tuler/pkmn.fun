@@ -13,11 +13,11 @@ import { PokemonSet } from "@pkmn/sets";
 import { Format } from "@pkmn/sim";
 import { FC, useState } from "react";
 import { Address, zeroAddress } from "viem";
-import { TeamSpecies, UndefinedTeam } from "./team";
-import { AddressText } from "./address";
+import { TeamSpecies, UndefinedTeam } from "./team/species";
+import { AddressText } from "./web3/address";
 import { SubmitTeam } from "./submit";
-import { TeamBuilder } from "./builder";
-import { TeamStats } from "./team_stats";
+import { TeamBuilder } from "./team/builder";
+import { TeamDetails } from "./team/details";
 
 interface ArenaPlayerProps {
     format: Format;
@@ -113,7 +113,7 @@ export const ArenaPlayer: FC<ArenaPlayerProps> = ({
                 offset={8}
                 position="right"
             >
-                <TeamStats team={team} />
+                <TeamDetails team={team} />
             </Drawer>
         </Stack>
     );

@@ -1,4 +1,4 @@
-import { TeamSpecies } from "@/components/team";
+import { TeamSpecies } from "@/components/team/species";
 import { ActionIcon, Anchor, Button, Group, Stack } from "@mantine/core";
 import { PokemonSet } from "@pkmn/sets";
 import { TeamGenerators } from "@pkmn/randoms";

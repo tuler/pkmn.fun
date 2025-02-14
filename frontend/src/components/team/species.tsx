@@ -3,7 +3,7 @@
 import { FC } from "react";
 import { PokemonSet } from "@pkmn/sets";
 import { Flex, FlexProps, Image, StyleProp } from "@mantine/core";
-import { PokemonImage } from "./pokemon";
+import { PokemonImage } from "../pokemon/image";
 
 export interface TeamSpeciesProps extends FlexProps {
     team?: PokemonSet<string>[] | null;

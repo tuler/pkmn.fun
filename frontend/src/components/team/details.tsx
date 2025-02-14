@@ -1,14 +1,10 @@
 "use client";
 
-import { FC } from "react";
 import { PokemonSet } from "@pkmn/sets";
 import { Flex, FlexProps, StyleProp } from "@mantine/core";
-import { PokemonImage } from "./pokemon";
-import { PokemonDetails } from "./pokemon_details";
-
-export interface TeamStatsProps extends FlexProps {
-    team?: PokemonSet<string>[] | null;
-}
+import { FC } from "react";
+import { PokemonImage } from "../pokemon/image";
+import { PokemonDetails } from "../pokemon/details";
 
 type FlexDirection = StyleProp<React.CSSProperties["flexDirection"]>;
 const oppositeDirection = (direction?: FlexDirection) => {
@@ -25,7 +21,11 @@ const oppositeDirection = (direction?: FlexDirection) => {
     return undefined;
 };
 
-export const TeamStats: FC<TeamStatsProps> = (props) => {
+export interface TeamDetailsProps extends FlexProps {
+    team?: PokemonSet<string>[] | null;
+}
+
+export const TeamDetails: FC<TeamDetailsProps> = (props) => {
     const { team, ...otherProps } = props;
     const direction = props.direction ?? "row";
     const align = direction === "row" ? "flex-end" : "flex-start";

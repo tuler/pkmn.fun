@@ -1,9 +1,8 @@
 "use client";
 
 import { Image, ImageProps } from "@mantine/core";
-import { Icons, Sprites } from "@pkmn/img";
+import { Sprites } from "@pkmn/img";
 import { FC } from "react";
-import parse from "style-to-object";
 
 export type GetPokemonOptions = Parameters<typeof Sprites.getPokemon>[1];
 export interface PokemonImageProps extends ImageProps {
@@ -40,19 +39,4 @@ export const PokemonImage: FC<PokemonImageProps> = (props) => {
             {...imageProps}
         />
     );
-};
-
-export interface PokemonIconProps {
-    name: string;
-}
-
-export const PokemonIcon: FC<PokemonIconProps> = (props) => {
-    const { name } = props;
-    const { style } = Icons.getPokemon(name);
-    const obj = parse(style);
-    if (obj && obj["image-rendering"]) {
-        obj.imageRendering = obj["image-rendering"];
-        delete obj["image-rendering"];
-    }
-    return obj ? <span style={obj} /> : <></>;
 };

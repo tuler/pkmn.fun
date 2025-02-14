@@ -1,8 +1,8 @@
 import { Battle } from "@/hooks/battle";
 import { Button, Group, Image, Stack, Text, Textarea } from "@mantine/core";
 import { FC } from "react";
-import { TeamSpecies } from "./team";
-import { AddressText } from "./address";
+import { TeamSpecies } from "./team/species";
+import { AddressText } from "./web3/address";
 import { useDisclosure } from "@mantine/hooks";
 
 interface BattleViewProps {

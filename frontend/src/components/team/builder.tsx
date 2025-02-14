@@ -4,7 +4,7 @@ import { PokemonSet } from "@pkmn/sets";
 import { Format, Teams, TeamValidator } from "@pkmn/sim";
 import { FC, useEffect, useState } from "react";
 import { TeamGenerators } from "@pkmn/randoms";
-import { TeamStats } from "./team_stats";
+import { TeamDetails } from "./details";
 import {
     IconCheck,
     IconClipboardText,
@@ -125,7 +125,7 @@ export const TeamBuilder: FC<TeamBuilderProps> = ({ format, onSave }) => {
                     {error}
                 </Alert>
             ))}
-            <TeamStats team={team} />
+            <TeamDetails team={team} />
         </Stack>
     );
 };
