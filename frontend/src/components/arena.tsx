@@ -13,7 +13,7 @@ export const Arena: FC = () => {
                 <>
                     <Group gap={8}>
                         <Title order={3}>{format.name}</Title>
-                        <Title order={3}>Battle</Title>
+                        <Title order={3}>Arena</Title>
                     </Group>
                     <ArenaPlayer
                         format={format}

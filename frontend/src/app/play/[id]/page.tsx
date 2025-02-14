@@ -1,4 +1,4 @@
-import { BattleView } from "@/components/battle";
+import { BattleView } from "@/components/battle/view";
 
 export default async function BattlePage({
     params,

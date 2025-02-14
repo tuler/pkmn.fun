@@ -7,14 +7,14 @@ import {
     PaperProps,
     Stack,
 } from "@mantine/core";
-import { PokemonSet } from "@pkmn/sets";
 import { useDisclosure } from "@mantine/hooks";
+import { PokemonSet } from "@pkmn/sets";
 import { IconTrophyFilled } from "@tabler/icons-react";
 import { FC } from "react";
 import { Address } from "viem";
+import { TeamDetails } from "../team/details";
 import { TeamSpecies } from "../team/species";
 import { AddressText } from "../web3/address";
-import { TeamDetails } from "../team/details";
 
 export interface PlayerTeamProps extends PaperProps {
     player: Address;
