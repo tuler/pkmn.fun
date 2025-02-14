@@ -1,7 +1,7 @@
+import { Battle } from "@/hooks/battle";
 import { Group, NavLink, Stack, Text } from "@mantine/core";
 import { IconChevronRight } from "@tabler/icons-react";
 import { FC } from "react";
-import { Battle } from "@/hooks/battle";
 import { MiniPlayerTeam } from "./mini";
 import { Timestamp } from "./timestamp";
 
@@ -13,7 +13,7 @@ export interface BattleTaglineProps {
 export const BattleTagline: FC<BattleTaglineProps> = ({ battle, id }) => {
     return (
         <NavLink
-            href={`/play/${id}`}
+            href={`/b/${id}`}
             label={
                 <Group justify="space-between" grow>
                     <Stack gap={0} pb="md">
