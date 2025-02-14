@@ -150,6 +150,38 @@ export default [
         stateMutability: "view",
     },
     {
+        type: "event",
+        name: "BattleCreated",
+        inputs: [
+            {
+                name: "battleId",
+                type: "uint256",
+                indexed: false,
+                internalType: "uint256",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "PlayerChanged",
+        inputs: [
+            {
+                name: "player",
+                type: "address",
+                indexed: false,
+                internalType: "address",
+            },
+            {
+                name: "playerNumber",
+                type: "uint8",
+                indexed: false,
+                internalType: "uint8",
+            },
+        ],
+        anonymous: false,
+    },
+    {
         type: "error",
         name: "ComputationNotFound",
         inputs: [
@@ -219,7 +251,17 @@ export default [
             },
         ],
     },
-    { type: "error", name: "PositionTaken", inputs: [] },
+    {
+        type: "error",
+        name: "PlayerAssigned",
+        inputs: [
+            {
+                name: "playerNumber",
+                type: "uint8",
+                internalType: "uint8",
+            },
+        ],
+    },
     {
         type: "error",
         name: "UnauthorizedCaller",

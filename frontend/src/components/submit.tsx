@@ -1,12 +1,4 @@
-import { FC, useEffect } from "react";
-import { PokemonSet } from "@pkmn/sets";
-import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
-import { Teams } from "@pkmn/sim";
-import {
-    useWaitForTransactionReceipt,
-    useWriteContract,
-    useSimulateContract,
-} from "wagmi";
+import { pkmnSimpleArenaAbi, pkmnSimpleArenaAddress } from "@/hooks/contracts";
 import {
     Alert,
     Button,
@@ -18,20 +10,30 @@ import {
     Textarea,
     useMantineColorScheme,
 } from "@mantine/core";
+import { PokemonSet } from "@pkmn/sets";
+import { Teams } from "@pkmn/sim";
+import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
 import { IconExclamationCircle } from "@tabler/icons-react";
-import { TransactionHash } from "./web3/txhash";
-import { pkmnSimpleArenaAbi, pkmnSimpleArenaAddress } from "@/hooks/contracts";
+import { FC, useEffect } from "react";
 import { stringToHex } from "viem";
+import {
+    useSimulateContract,
+    useWaitForTransactionReceipt,
+    useWriteContract,
+} from "wagmi";
 import { TeamSpecies } from "./team/species";
+import { TransactionHash } from "./web3/txhash";
 
 interface SubmitTeamProps {
     teamNumber: 1 | 2;
     team: PokemonSet<string>[];
     onCancel: () => void;
+    onSuccess: () => void;
 }
 
 export const SubmitTeam: FC<SubmitTeamProps> = ({
     onCancel,
+    onSuccess,
     teamNumber,
     team,
 }) => {
@@ -71,6 +73,13 @@ export const SubmitTeam: FC<SubmitTeamProps> = ({
             });
         }
     }, [hash]);
+
+    useEffect(() => {
+        console.log("isConfirmed", isConfirmed);
+        if (isConfirmed) {
+            onSuccess();
+        }
+    }, [isConfirmed]);
 
     return (
         <Stack>
@@ -113,7 +122,7 @@ export const SubmitTeam: FC<SubmitTeamProps> = ({
                     </Group>
                 </Overlay>
             </Group>
-            <Stack gap={0}>
+            <Group justify="space-between">
                 {hash && (
                     <Group gap={2}>
                         <Text>tx: </Text>
@@ -127,7 +136,7 @@ export const SubmitTeam: FC<SubmitTeamProps> = ({
                     </Group>
                 )}
                 {isConfirmed && <Text c="teal">Transaction confirmed.</Text>}
-            </Stack>
+            </Group>
         </Stack>
     );
 };

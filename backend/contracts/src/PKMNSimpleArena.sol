@@ -26,7 +26,13 @@ contract PKMNSimpleArena is PKMNBattleSimulator {
     Battle[] public battles;
 
     // error if player tries to take a seat already taken
-    error PositionTaken();
+    error PlayerAssigned(uint8 playerNumber);
+
+    // Define the PlayerChanged event
+    event PlayerChanged(address player, uint8 playerNumber);
+
+    // Define the BattleCreatedEvent
+    event BattleCreated(uint256 battleId);
 
     // Track active matches per player
     constructor(
@@ -42,19 +48,27 @@ contract PKMNSimpleArena is PKMNBattleSimulator {
     // submit a team to the arena
     function submitTeam1(bytes calldata teamData) external {
         if (player1 != address(0)) {
-            revert PositionTaken();
+            revert PlayerAssigned(1);
         }
         player1 = msg.sender;
         team1 = teamData;
+
+        // Emit PlayerChanged event for player1
+        emit PlayerChanged(player1, 1);
+
         maybeStartBattle();
     }
 
     function submitTeam2(bytes calldata teamData) external {
         if (player2 != address(0)) {
-            revert PositionTaken();
+            revert PlayerAssigned(2);
         }
         player2 = msg.sender;
         team2 = teamData;
+
+        // Emit PlayerChanged event for player2
+        emit PlayerChanged(player2, 2);
+
         maybeStartBattle();
     }
 
@@ -84,10 +98,15 @@ contract PKMNSimpleArena is PKMNBattleSimulator {
             })
         );
 
+        // Emit BattleCreatedEvent with the new battle ID
+        emit BattleCreated(battles.length - 1);
+
         // reset to allow a new battle
         player1 = address(0);
         player2 = address(0);
         team1 = "";
         team2 = "";
+        emit PlayerChanged(player1, 1);
+        emit PlayerChanged(player2, 2);
     }
 }

@@ -3,7 +3,11 @@ import { Dex, Format, Teams } from "@pkmn/sim";
 import { useEffect, useState } from "react";
 import { Address, hexToString } from "viem";
 import { useReadContracts } from "wagmi";
-import { pkmnSimpleArenaAbi, pkmnSimpleArenaAddress } from "./contracts";
+import {
+    pkmnSimpleArenaAbi,
+    pkmnSimpleArenaAddress,
+    useWatchPkmnSimpleArenaPlayerChangedEvent,
+} from "./contracts";
 
 export type Arena = {
     format: Format;
@@ -45,6 +49,10 @@ export const useArena = () => {
         ],
     });
 
+    useWatchPkmnSimpleArenaPlayerChangedEvent({
+        onLogs: () => read.refetch(),
+    });
+
     useEffect(() => {
         if (read.data) {
             const [f, p1, p2, t1, t2] = read.data;
@@ -70,7 +78,7 @@ export const useArena = () => {
                 });
             }
         }
-    }, [read.status]);
+    }, [read.data]);
 
     return { ...read, arena };
 };

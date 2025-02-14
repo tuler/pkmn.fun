@@ -1,8 +1,12 @@
 import { PokemonSet } from "@pkmn/sets";
 import { Teams } from "@pkmn/sim";
-import { Address, hexToString } from "viem";
 import { useEffect, useState } from "react";
-import { useReadPkmnSimpleArenaBattles } from "./contracts";
+import { Address, hexToString } from "viem";
+import {
+    useReadPkmnSimpleArenaBattles,
+    useReadPkmnSimpleArenaGetBattleCount,
+    useWatchPkmnSimpleArenaBattleCreatedEvent,
+} from "./contracts";
 
 export type Battle = {
     player1: Address;
@@ -13,6 +17,22 @@ export type Battle = {
     error: string;
     log: string;
     timestamp: BigInt;
+};
+
+export const useBattleCount = () => {
+    const [count, setCount] = useState<number | undefined>(undefined);
+    const read = useReadPkmnSimpleArenaGetBattleCount();
+    useEffect(() => {
+        if (read.data) {
+            setCount(Number(read.data));
+        }
+    }, [read.data]);
+
+    useWatchPkmnSimpleArenaBattleCreatedEvent({
+        onLogs: () => read.refetch(),
+    });
+
+    return { ...read, count };
 };
 
 export const useBattle = (index: number) => {

@@ -53,6 +53,11 @@ export const ArenaPlayer: FC<ArenaPlayerProps> = ({
         setNewTeam(null);
     };
 
+    const onSubmit = () => {
+        console.log("CLEARING NEW TEAM");
+        setNewTeam(null);
+    };
+
     return (
         <Stack>
             {!team && newTeam == null && (
@@ -92,6 +97,7 @@ export const ArenaPlayer: FC<ArenaPlayerProps> = ({
                 newTeam?.length > 0 && (
                     <SubmitTeam
                         onCancel={onCancel}
+                        onSuccess={onSubmit}
                         teamNumber={playerNumber}
                         team={newTeam}
                     />

@@ -1,8 +1,7 @@
+import { useBattle, useBattleCount } from "@/hooks/battle";
 import { Pagination, Stack, Title } from "@mantine/core";
 import { FC, useState } from "react";
-import { useBattle } from "@/hooks/battle";
 import { BattleTagline } from "./battle/tagline";
-import { useReadPkmnSimpleArenaGetBattleCount } from "@/hooks/contracts";
 
 /**
  * Chunk an array into smaller arrays of a given size.
@@ -25,9 +24,9 @@ const BattleHistoryItem: FC<{ id: number }> = ({ id }) => {
 };
 
 export const BattleHistory: FC = () => {
-    const { data: battleCount } = useReadPkmnSimpleArenaGetBattleCount();
+    const { count } = useBattleCount();
     const pages = chunk(
-        Array.from({ length: Number(battleCount ?? 0) }, (_, i) => i),
+        Array.from({ length: Number(count ?? 0) }, (_, i) => i),
         10,
     );
     const [activePage, setPage] = useState(1);
