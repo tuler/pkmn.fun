@@ -13,12 +13,12 @@ import { PokemonSet } from "@pkmn/sets";
 import { Format } from "@pkmn/sim";
 import { FC, useState } from "react";
 import { Address, zeroAddress } from "viem";
-import { TeamSpecies } from "./team/species";
-import { UndefinedTeam } from "./team/undefined";
-import { AddressText } from "./web3/address";
 import { SubmitTeam } from "./submit";
 import { TeamBuilder } from "./team/builder";
 import { TeamDetails } from "./team/details";
+import { TeamSpecies } from "./team/species";
+import { UndefinedTeam } from "./team/undefined";
+import { AddressText } from "./web3/address";
 
 interface ArenaPlayerProps {
     format: Format;
@@ -58,10 +58,7 @@ export const ArenaPlayer: FC<ArenaPlayerProps> = ({
             {!team && newTeam == null && (
                 <Group pos="relative">
                     <UndefinedTeam />
-                    <Overlay
-                        color={colorScheme === "light" ? "#fff" : "#000"}
-                        backgroundOpacity={0.9}
-                    >
+                    <Overlay color={colorScheme === "light" ? "#fff" : "#000"}>
                         <Center h="100%">
                             <Button
                                 variant="gradient"

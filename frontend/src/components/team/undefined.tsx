@@ -20,7 +20,7 @@ export const UndefinedTeam: FC<UndefinedTeamProps> = (props) => {
             animate={
                 isLoading
                     ? { opacity: [0.05, 0.1, 0.05] }
-                    : { opacity: [0.1, 0.1] }
+                    : { opacity: [0.2, 0.2] }
             }
             initial={{ opacity: 0.1 }}
             transition={{ duration: 1, ease: "linear", repeat: Infinity }}
