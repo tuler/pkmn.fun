@@ -4,7 +4,7 @@ import { react } from "@wagmi/cli/plugins";
 import { Address, erc20Abi } from "viem";
 
 export default defineConfig(() => {
-    const env = loadEnv();
+    const env = loadEnv({ mode: process.env.NODE_ENV });
 
     return {
         out: "src/hooks/contracts.tsx",
