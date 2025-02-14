@@ -17,7 +17,7 @@ app.addAdvanceHandler(async (data) => {
     const { payload } = data;
 
     // decode payload data, which has the matchId (for the response), the pkmn format, and teams
-    const [formatId, player1Team, player2Team] = decodeAbiParameters(
+    const [formatId, team1, team2] = decodeAbiParameters(
         parseAbiParameters(
             "string format, bytes player1Team, bytes player2Team"
         ),
@@ -25,11 +25,7 @@ app.addAdvanceHandler(async (data) => {
     );
 
     // run simulation
-    const { winner, description } = await simulate(
-        formatId,
-        player1Team,
-        player2Team
-    );
+    const { winner, description } = await simulate(formatId, team1, team2);
 
     // debug of battle
     console.log(description);
@@ -37,10 +33,12 @@ app.addAdvanceHandler(async (data) => {
     // create a notice with the expected match outcome
     await app.createNotice({
         payload: encodeAbiParameters(
-            parseAbiParameters("uint8 winner, bytes matchDescription"),
+            parseAbiParameters("uint8 winner, bytes description"),
             [winner, stringToHex(description)]
         ),
     });
+
+    console.log(`winner is P${winner}`);
 
     return "accept";
 });
