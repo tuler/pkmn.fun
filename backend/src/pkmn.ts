@@ -11,7 +11,8 @@ import { Hex, hexToString } from "viem";
 
 export type SimulationResult = {
     winner: number; // 0 draw, 1 player1, 2 player2
-    description: string;
+    error?: string;
+    log?: string;
 };
 
 export const simulate = async (
@@ -30,17 +31,17 @@ export const simulate = async (
     if (!team1 && !team2) {
         return {
             winner: 0,
-            description: "Both teams are invalid",
+            error: "Both teams are invalid",
         };
     } else if (!team2) {
         return {
             winner: 1,
-            description: "Player 2 team is invalid",
+            error: "Player 2 team is invalid",
         };
     } else if (!team1) {
         return {
             winner: 2,
-            description: "Player 1 team is invalid",
+            error: "Player 1 team is invalid",
         };
     }
 
@@ -56,7 +57,7 @@ export const simulate = async (
         // declare a draw
         return {
             winner: 0,
-            description: `Invalid teams: ${team1Issues
+            error: `Invalid teams: ${team1Issues
                 .concat(team2Issues)
                 .join(" ")}`,
         };
@@ -64,13 +65,13 @@ export const simulate = async (
         // team2 has issues, p1 wins
         return {
             winner: 1,
-            description: `Invalid team: ${team2Issues.join(" ")}`,
+            error: `Invalid team: ${team2Issues.join(" ")}`,
         };
     } else if (team1Issues) {
         // team1 has issues, p2 wins
         return {
             winner: 2,
-            description: `Invalid team: ${team1Issues.join(" ")}`,
+            error: `Invalid team: ${team1Issues.join(" ")}`,
         };
     }
 
@@ -108,13 +109,13 @@ export const simulate = async (
                     if (args[0] === "win") {
                         resolve({
                             winner: parseInt(args[1].charAt(1)),
-                            description: log,
+                            log,
                         });
                     }
 
                     // check if tie message
                     if (args[0] === "tie") {
-                        resolve({ winner: 0, description: log });
+                        resolve({ winner: 0, log });
                     }
                 }
             }

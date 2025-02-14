@@ -1,5 +1,4 @@
-import pkmnv1 from "@/abi/pkmnv1";
-import pkmnv2 from "@/abi/pkmnv2";
+import PKMNSimpleArena from "@/abi/PKMNSimpleArena";
 import { defineConfig, loadEnv } from "@wagmi/cli";
 import { react } from "@wagmi/cli/plugins";
 import { Address, erc20Abi } from "viem";
@@ -15,14 +14,10 @@ export default defineConfig(() => {
                 name: "erc20",
             },
             {
-                abi: pkmnv1,
-                name: "PKMNV1",
-                address: env.NEXT_PUBLIC_PKMNV1_CONTRACT_ADDRESS as Address,
-            },
-            {
-                abi: pkmnv2,
-                name: "PKMNV2",
-                address: env.NEXT_PUBLIC_PKMNV2_CONTRACT_ADDRESS as Address,
+                abi: PKMNSimpleArena,
+                name: "PKMNSimpleArena",
+                address:
+                    env.NEXT_PUBLIC_PKMNSIMPLEARENA_CONTRACT_ADDRESS as Address,
             },
         ],
         plugins: [react()],

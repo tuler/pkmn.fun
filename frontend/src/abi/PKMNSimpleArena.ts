@@ -40,6 +40,7 @@ export default [
             { name: "team1", type: "bytes", internalType: "bytes" },
             { name: "team2", type: "bytes", internalType: "bytes" },
             { name: "winner", type: "uint8", internalType: "uint8" },
+            { name: "err", type: "bytes", internalType: "bytes" },
             { name: "log", type: "bytes", internalType: "bytes" },
             {
                 name: "timestamp",
@@ -78,6 +79,13 @@ export default [
         ],
         outputs: [],
         stateMutability: "nonpayable",
+    },
+    {
+        type: "function",
+        name: "getBattleCount",
+        inputs: [],
+        outputs: [{ name: "", type: "uint256", internalType: "uint256" }],
+        stateMutability: "view",
     },
     {
         type: "function",

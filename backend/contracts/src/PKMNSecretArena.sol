@@ -2,8 +2,9 @@
 pragma solidity ^0.8.28;
 
 import "../lib/coprocessor-base-contract/src/CoprocessorAdapter.sol";
+import "./PKMNBattleSimulator.sol";
 
-contract PKMNV1 is CoprocessorAdapter {
+contract PKMNSecretArena is PKMNBattleSimulator {
     enum MatchPhase {
         COMMIT, // Players submit team hashes
         REVEAL, // Players reveal their teams
@@ -29,7 +30,8 @@ contract PKMNV1 is CoprocessorAdapter {
         MatchPhase phase;
         MatchOutcome outcome;
         address winner;
-        bytes description;
+        bytes err;
+        bytes log;
     }
 
     Match[] public matches;
@@ -69,7 +71,7 @@ contract PKMNV1 is CoprocessorAdapter {
     constructor(
         address _taskIssuerAddress,
         bytes32 _machineHash
-    ) CoprocessorAdapter(_taskIssuerAddress, _machineHash) {}
+    ) PKMNBattleSimulator(_taskIssuerAddress, _machineHash) {}
 
     function commitTeam(bytes32 teamHash) external {
         if (teamHash == bytes32(0)) {
@@ -95,7 +97,8 @@ contract PKMNV1 is CoprocessorAdapter {
                     revealDeadline: 0,
                     phase: MatchPhase.COMMIT,
                     outcome: MatchOutcome.UNDECIDED,
-                    description: "",
+                    err: "",
+                    log: "",
                     winner: address(0)
                 })
             );
@@ -174,44 +177,33 @@ contract PKMNV1 is CoprocessorAdapter {
         ) {
             gameMatch.phase = MatchPhase.BATTLE;
             emit MatchStarted(matchId);
-
-            // Call coprocessor to simulate battle
-            bytes memory input = abi.encode(
+            simulateBattle(
                 FORMAT,
                 gameMatch.player1TeamData,
                 gameMatch.player2TeamData
             );
-            bytes32 inputHash = keccak256(input);
-            computationSent[inputHash] = true;
-            matchIds[inputHash] = matchId;
-            taskIssuer.issueTask(machineHash, input, address(this));
         }
     }
 
-    function handleNotice(
+    function handleBattleResult(
         bytes32 _payloadHash,
-        bytes memory notice
+        uint8 _winner,
+        bytes memory _err,
+        bytes memory _log
     ) internal override {
-        // Add logic for handling callback from co-processor containing notices.
-
-        // notice is ABI encoded with matchId, winner (0, 1, 2), and match description
-        (uint8 winner, bytes memory description) = abi.decode(
-            notice,
-            (uint8, bytes)
-        );
-
         uint256 matchId = matchIds[_payloadHash];
         Match storage gameMatch = matches[matchId];
 
         // Update match state
-        gameMatch.description = description;
+        gameMatch.err = _err;
+        gameMatch.log = _log;
         gameMatch.phase = MatchPhase.COMPLETED;
 
         // Set winner based on winner value (1 = player1, 2 = player2, 0 = draw)
-        if (winner == 1) {
+        if (_winner == 1) {
             gameMatch.winner = gameMatch.player1;
             gameMatch.outcome = MatchOutcome.PLAYER1_WIN;
-        } else if (winner == 2) {
+        } else if (_winner == 2) {
             gameMatch.winner = gameMatch.player2;
             gameMatch.outcome = MatchOutcome.PLAYER2_WIN;
         } else {

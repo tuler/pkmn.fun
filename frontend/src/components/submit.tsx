@@ -20,7 +20,7 @@ import {
 } from "@mantine/core";
 import { IconExclamationCircle } from "@tabler/icons-react";
 import { TransactionHash } from "./web3/txhash";
-import { pkmnv2Abi, pkmnv2Address } from "@/hooks/contracts";
+import { pkmnSimpleArenaAbi, pkmnSimpleArenaAddress } from "@/hooks/contracts";
 import { stringToHex } from "viem";
 import { TeamSpecies } from "./team/species";
 
@@ -47,8 +47,8 @@ export const SubmitTeam: FC<SubmitTeamProps> = ({
     } = useWriteContract();
 
     const { data: simulateData } = useSimulateContract({
-        abi: pkmnv2Abi,
-        address: pkmnv2Address,
+        abi: pkmnSimpleArenaAbi,
+        address: pkmnSimpleArenaAddress,
         functionName: `submitTeam${teamNumber}`,
         args: [stringToHex(packed)],
     });

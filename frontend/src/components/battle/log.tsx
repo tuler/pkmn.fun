@@ -8,8 +8,8 @@ export interface BattleLogProps {
 
 export const BattleLog: FC<BattleLogProps> = ({ log }) => {
     const formatter = new LogFormatter();
-    const formattedLogs = Protocol.parse(log).map(({ args, kwArgs }) =>
-        formatter.formatHTML(args, kwArgs),
+    const formattedLogs = Array.from(Protocol.parse(log)).map(
+        ({ args, kwArgs }) => formatter.formatHTML(args, kwArgs),
     );
 
     return (

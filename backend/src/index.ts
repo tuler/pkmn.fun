@@ -25,16 +25,17 @@ app.addAdvanceHandler(async (data) => {
     );
 
     // run simulation
-    const { winner, description } = await simulate(formatId, team1, team2);
+    const { winner, error, log } = await simulate(formatId, team1, team2);
 
     // debug of battle
-    console.log(description);
+    console.log(log ?? "");
+    console.log(error ?? "");
 
     // create a notice with the expected match outcome
     await app.createNotice({
         payload: encodeAbiParameters(
-            parseAbiParameters("uint8 winner, bytes description"),
-            [winner, stringToHex(description)]
+            parseAbiParameters("uint8 winner, bytes err, bytes log"),
+            [winner, stringToHex(error || ""), stringToHex(log || "")]
         ),
     });
 

@@ -2,8 +2,9 @@
 pragma solidity ^0.8.28;
 
 import "../lib/coprocessor-base-contract/src/CoprocessorAdapter.sol";
+import "./PKMNBattleSimulator.sol";
 
-contract PKMNV2 is CoprocessorAdapter {
+contract PKMNSimpleArena is PKMNBattleSimulator {
     string public constant FORMAT = "gen9ou";
 
     address public player1;
@@ -17,6 +18,7 @@ contract PKMNV2 is CoprocessorAdapter {
         bytes team1;
         bytes team2;
         uint8 winner; // 0 (tie), 1 (player1), 2 (player2)
+        bytes err;
         bytes log;
         uint256 timestamp;
     }
@@ -30,8 +32,14 @@ contract PKMNV2 is CoprocessorAdapter {
     constructor(
         address _taskIssuerAddress,
         bytes32 _machineHash
-    ) CoprocessorAdapter(_taskIssuerAddress, _machineHash) {}
+    ) PKMNBattleSimulator(_taskIssuerAddress, _machineHash) {}
 
+    // return number of battles
+    function getBattleCount() external view returns (uint256) {
+        return battles.length;
+    }
+
+    // submit a team to the arena
     function submitTeam1(bytes calldata teamData) external {
         if (player1 != address(0)) {
             revert PositionTaken();
@@ -52,21 +60,16 @@ contract PKMNV2 is CoprocessorAdapter {
 
     function maybeStartBattle() internal {
         if (player1 != address(0) && player2 != address(0)) {
-            // Call coprocessor to simulate battle
-            bytes memory input = abi.encode(FORMAT, team1, team2);
-            bytes32 inputHash = keccak256(input);
-            computationSent[inputHash] = true;
-            taskIssuer.issueTask(machineHash, input, address(this));
+            simulateBattle(FORMAT, team1, team2);
         }
     }
 
-    function handleNotice(
+    function handleBattleResult(
         bytes32 /* _payloadHash */,
-        bytes memory notice
+        uint8 _winner,
+        bytes memory _err,
+        bytes memory _log
     ) internal override {
-        // notice is ABI encoded with matchId, winner (0, 1, 2), and match description
-        (uint8 _winner, bytes memory _log) = abi.decode(notice, (uint8, bytes));
-
         // Create new battle record and add to battles array
         battles.push(
             Battle({
@@ -75,6 +78,7 @@ contract PKMNV2 is CoprocessorAdapter {
                 team1: team1,
                 team2: team2,
                 winner: _winner,
+                err: _err,
                 log: _log,
                 timestamp: block.timestamp
             })

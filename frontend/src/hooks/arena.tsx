@@ -3,7 +3,7 @@ import { Dex, Format, Teams } from "@pkmn/sim";
 import { useEffect, useState } from "react";
 import { Address, hexToString } from "viem";
 import { useReadContracts } from "wagmi";
-import { pkmnv2Abi, pkmnv2Address } from "./contracts";
+import { pkmnSimpleArenaAbi, pkmnSimpleArenaAddress } from "./contracts";
 
 export type Arena = {
     format: Format;
@@ -18,28 +18,28 @@ export const useArena = () => {
     const read = useReadContracts({
         contracts: [
             {
-                abi: pkmnv2Abi,
-                address: pkmnv2Address,
+                abi: pkmnSimpleArenaAbi,
+                address: pkmnSimpleArenaAddress,
                 functionName: "FORMAT",
             },
             {
-                abi: pkmnv2Abi,
-                address: pkmnv2Address,
+                abi: pkmnSimpleArenaAbi,
+                address: pkmnSimpleArenaAddress,
                 functionName: "player1",
             },
             {
-                abi: pkmnv2Abi,
-                address: pkmnv2Address,
+                abi: pkmnSimpleArenaAbi,
+                address: pkmnSimpleArenaAddress,
                 functionName: "player2",
             },
             {
-                abi: pkmnv2Abi,
-                address: pkmnv2Address,
+                abi: pkmnSimpleArenaAbi,
+                address: pkmnSimpleArenaAddress,
                 functionName: "team1",
             },
             {
-                abi: pkmnv2Abi,
-                address: pkmnv2Address,
+                abi: pkmnSimpleArenaAbi,
+                address: pkmnSimpleArenaAddress,
                 functionName: "team2",
             },
         ],
