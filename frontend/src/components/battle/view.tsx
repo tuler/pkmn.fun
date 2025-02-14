@@ -6,6 +6,7 @@ import { FC } from "react";
 import { LoadingTeam } from "./loading_team";
 import { BattleLog } from "./log";
 import { PlayerTeam } from "./player_team";
+import { Timestamp } from "./timestamp";
 
 export interface BattleViewProps {
     id: number;
@@ -16,6 +17,7 @@ export const BattleView: FC<BattleViewProps> = ({ id }) => {
 
     return (
         <Stack p={20}>
+            {battle?.timestamp && <Timestamp timestamp={battle?.timestamp} />}
             {battle?.player1 && battle?.team1 && (
                 <PlayerTeam
                     p={10}
