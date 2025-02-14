@@ -1,44 +1,44 @@
-import { Battle } from "@/hooks/battle";
-import { Button, Group, Image, Stack, Text, Textarea } from "@mantine/core";
-import { FC } from "react";
-import { TeamSpecies } from "./team/species";
-import { AddressText } from "./web3/address";
-import { useDisclosure } from "@mantine/hooks";
+"use client";
 
-interface BattleViewProps {
-    battle: Battle;
+import { Center, Stack, Title } from "@mantine/core";
+import { FC } from "react";
+import { useBattle } from "@/hooks/battle";
+import { PlayerTeam } from "./battle/player_team";
+
+export interface BattleViewProps {
+    id: number;
 }
 
-export const BattleView: FC<BattleViewProps> = ({ battle }) => {
-    const [teamViewerOpened, { open: openTeamViewer, close: closeTeamViewer }] =
-        useDisclosure(false);
+export const BattleView: FC<BattleViewProps> = ({ id }) => {
+    const { battle } = useBattle(id);
 
     return (
-        <Stack>
-            <Stack>
-                <TeamSpecies team={battle.team1} />
-                <Group justify="space-between">
-                    <Group gap={2}>
-                        <Image src="/img/hat.png" w={32} />
-                        <AddressText address={battle.player1} shorten={false} />
-                    </Group>
-                    <Button variant="subtle" onClick={openTeamViewer}>
-                        View Team
-                    </Button>
-                </Group>
-            </Stack>
-            <Stack>
-                <TeamSpecies team={battle.team2} />
-                <Group justify="space-between">
-                    <Group gap={2}>
-                        <Image src="/img/hat.png" w={32} />
-                        <AddressText address={battle.player2} shorten={false} />
-                    </Group>
-                    <Button variant="subtle" onClick={openTeamViewer}>
-                        View Team
-                    </Button>
-                </Group>
-            </Stack>
+        <Stack p={20}>
+            {battle && (
+                <>
+                    {battle.player1 && battle.team1 && (
+                        <PlayerTeam
+                            p={10}
+                            withBorder
+                            player={battle.player1}
+                            team={battle.team1}
+                            winner={battle.winner === 1}
+                        />
+                    )}
+                    <Center>
+                        <Title order={2}>vs</Title>
+                    </Center>
+                    {battle.player2 && battle.team2 && (
+                        <PlayerTeam
+                            p={10}
+                            withBorder
+                            player={battle.player2}
+                            team={battle.team2}
+                            winner={battle.winner === 2}
+                        />
+                    )}
+                </>
+            )}
         </Stack>
     );
 };

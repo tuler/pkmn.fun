@@ -33,7 +33,7 @@ export const useBattle = (index: number) => {
                 timestamp,
             });
         }
-    }, [read.data]);
+    }, [read.status]);
 
     return { ...read, battle };
 };
