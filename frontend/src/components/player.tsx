@@ -6,8 +6,6 @@ import {
     Image,
     Overlay,
     Stack,
-    Text,
-    Textarea,
     useMantineColorScheme,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";

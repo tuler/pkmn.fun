@@ -1,16 +1,21 @@
-import { MatchComponent } from "@/components/match";
-import { Stack } from "@mantine/core";
+"use client";
 
-export default async function MatchPage({
+import { notFound } from "next/navigation";
+import { useEffect } from "react";
+import { BattleView } from "@/components/battle";
+import { useBattle } from "@/hooks/battle";
+
+export default async function BattlePage({
     params,
 }: {
     params: Promise<{ id: string }>;
 }) {
     const id = (await params).id;
-
-    return (
-        <Stack gap={50} p={100}>
-            <MatchComponent id={BigInt(id)} />
-        </Stack>
-    );
+    const { battle, isLoading } = useBattle(parseInt(id));
+    useEffect(() => {
+        if (!isLoading && !battle) {
+            notFound();
+        }
+    }, [isLoading, battle]);
+    return battle ? <BattleView battle={battle} /> : <></>;
 }

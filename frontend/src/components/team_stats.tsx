@@ -3,8 +3,8 @@
 import { FC } from "react";
 import { PokemonSet } from "@pkmn/sets";
 import { Flex, FlexProps, StyleProp } from "@mantine/core";
-import { Pokemon } from "./pokemon";
-import { PokemonStats } from "./pokemon_stats";
+import { PokemonImage } from "./pokemon";
+import { PokemonDetails } from "./pokemon_details";
 
 export interface TeamStatsProps extends FlexProps {
     team?: PokemonSet<string>[] | null;
@@ -37,17 +37,15 @@ export const TeamStats: FC<TeamStatsProps> = (props) => {
             {...otherProps}
             direction={direction}
             wrap="wrap"
-            // bg="cyan"
         >
             {team?.map((pk, index) => (
                 <Flex
                     direction={oppositeDirection(direction)}
                     align="center"
                     key={index}
-                    // bg="yellow"
                 >
-                    <Pokemon key={index} name={pk.name || pk.species} />
-                    <PokemonStats pokemon={pk} />
+                    <PokemonImage key={index} name={pk.name || pk.species} />
+                    <PokemonDetails pokemon={pk} />
                 </Flex>
             ))}
         </Flex>

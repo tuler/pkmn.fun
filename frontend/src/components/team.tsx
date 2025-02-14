@@ -2,16 +2,8 @@
 
 import { FC } from "react";
 import { PokemonSet } from "@pkmn/sets";
-import {
-    Flex,
-    FlexProps,
-    Image,
-    Overlay,
-    StyleProp,
-    useMantineColorScheme,
-} from "@mantine/core";
-import { Pokemon } from "./pokemon";
-import { useColorScheme } from "@mantine/hooks";
+import { Flex, FlexProps, Image, StyleProp } from "@mantine/core";
+import { PokemonImage } from "./pokemon";
 
 export interface TeamSpeciesProps extends FlexProps {
     team?: PokemonSet<string>[] | null;
@@ -51,7 +43,7 @@ export const TeamSpecies: FC<TeamSpeciesProps> = (props) => {
                     align="center"
                     key={index}
                 >
-                    <Pokemon key={index} name={pk.name || pk.species} />
+                    <PokemonImage name={pk.name || pk.species} />
                 </Flex>
             ))}
         </Flex>

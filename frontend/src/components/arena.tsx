@@ -2,6 +2,7 @@ import { useArena } from "@/hooks/arena";
 import { Group, Stack, Title } from "@mantine/core";
 import { FC } from "react";
 import { ArenaPlayer } from "./player";
+import { BattleHistory } from "./history";
 
 export const Arena: FC = () => {
     const { arena } = useArena();
@@ -30,6 +31,8 @@ export const Arena: FC = () => {
                     />
                 </>
             )}
+
+            <BattleHistory />
         </Stack>
     );
 };

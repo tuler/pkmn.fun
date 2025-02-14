@@ -1,21 +1,8 @@
-import {
-    Breadcrumbs,
-    DefaultMantineColor,
-    Group,
-    List,
-    Paper,
-    StyleProp,
-    Text,
-} from "@mantine/core";
-import { Icons } from "@pkmn/img";
+import { Breadcrumbs, Group, List, Paper, Text } from "@mantine/core";
 import { PokemonSet } from "@pkmn/sets";
 import { StatsTable } from "@pkmn/sim";
 import { FC } from "react";
 import { PokemonItem } from "./item";
-
-export interface PokemonStatsProps {
-    pokemon: PokemonSet<string>;
-}
 
 const nonHiddenStats = (stats: StatsTable, hiddenValue: number) =>
     stats
@@ -29,7 +16,11 @@ const nonHiddenStats = (stats: StatsTable, hiddenValue: number) =>
           ].filter((stat) => stat.value !== hiddenValue)
         : [];
 
-export const PokemonStats: FC<PokemonStatsProps> = (props) => {
+export interface PokemonDetailsProps {
+    pokemon: PokemonSet<string>;
+}
+
+export const PokemonDetails: FC<PokemonDetailsProps> = (props) => {
     const p = props.pokemon;
     const name = p.name ? `${p.name} (${p.species})` : p.species;
     const item = p.item;
