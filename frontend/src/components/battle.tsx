@@ -4,6 +4,7 @@ import { Center, Stack, Title } from "@mantine/core";
 import { FC } from "react";
 import { useBattle } from "@/hooks/battle";
 import { PlayerTeam } from "./battle/player_team";
+import { BattleLog } from "./battle/log";
 
 export interface BattleViewProps {
     id: number;
@@ -39,6 +40,7 @@ export const BattleView: FC<BattleViewProps> = ({ id }) => {
                     )}
                 </>
             )}
+            <BattleLog log={battle?.log || ""} />
         </Stack>
     );
 };

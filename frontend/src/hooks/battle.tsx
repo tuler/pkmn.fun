@@ -10,6 +10,7 @@ export type Battle = {
     team1: PokemonSet<string>[] | null;
     team2: PokemonSet<string>[] | null;
     winner: 0 | 1 | 2;
+    error: string;
     log: string;
     timestamp: BigInt;
 };
@@ -29,6 +30,7 @@ export const useBattle = (index: number) => {
                 team1: Teams.unpack(hexToString(t1)),
                 team2: Teams.unpack(hexToString(t2)),
                 winner: w as 0 | 1 | 2,
+                error: "", // XXX: add to solidity
                 log: hexToString(l),
                 timestamp,
             });
