@@ -1,10 +1,8 @@
 import { Alert, NavLink, Stack, Textarea } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+import { TeamGenerators } from "@pkmn/randoms";
 import { PokemonSet } from "@pkmn/sets";
 import { Format, Teams, TeamValidator } from "@pkmn/sim";
-import { FC, useEffect, useState } from "react";
-import { TeamGenerators } from "@pkmn/randoms";
-import { TeamDetails } from "./details";
 import {
     IconCheck,
     IconClipboardText,
@@ -12,6 +10,8 @@ import {
     IconGeometry,
     IconMoodCrazyHappy,
 } from "@tabler/icons-react";
+import { FC, useEffect, useState } from "react";
+import { TeamDetails } from "./details";
 
 export interface TeamBuilderProps {
     format: Format;
@@ -41,6 +41,7 @@ export const TeamBuilder: FC<TeamBuilderProps> = ({ format, onSave }) => {
         }
     }, [team]);
 
+    // import team using the import text
     const importTeam = () => {
         if (importOpen && importText) {
             const team = Teams.import(importText);
@@ -60,6 +61,22 @@ export const TeamBuilder: FC<TeamBuilderProps> = ({ format, onSave }) => {
         }
     };
 
+    // generate a random team
+    const generateTeam = () => {
+        // try 100 times to generate a valid team
+        // because generator can return invalid teams
+        for (let i = 0; i < 100; i++) {
+            const team = generator.getTeam();
+            const errors = validator.validateTeam(team);
+            if (errors === null || errors.length === 0) {
+                setTeam(team);
+                return;
+            }
+        }
+    };
+
+    // save the team only if it's valid
+    // save button is disabled if the team is not valid
     const save = () => {
         if (team) {
             onSave(team);
@@ -73,7 +90,7 @@ export const TeamBuilder: FC<TeamBuilderProps> = ({ format, onSave }) => {
                     label="I'm feeling lucky!"
                     variant="subtle"
                     active
-                    onClick={() => setTeam(generator.getTeam())}
+                    onClick={generateTeam}
                     leftSection={<IconMoodCrazyHappy />}
                 />
                 <NavLink
