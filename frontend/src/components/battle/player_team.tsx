@@ -39,7 +39,7 @@ export const PlayerTeam: FC<PlayerTeamProps> = ({
                     <Group gap={2}>
                         {winner && <IconTrophyFilled color="gold" />}
                         <Image src="/img/hat.png" w={32} />
-                        <AddressText address={player} shorten={false} />
+                        <AddressText address={player} />
                     </Group>
                     <Button variant="subtle" onClick={openTeamViewer}>
                         View Team

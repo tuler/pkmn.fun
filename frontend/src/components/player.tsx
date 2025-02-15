@@ -82,7 +82,7 @@ export const ArenaPlayer: FC<ArenaPlayerProps> = ({
                     <Group justify="space-between">
                         <Group gap={2}>
                             <Image src="/img/hat.png" w={32} />
-                            <AddressText address={player} shorten={false} />
+                            <AddressText address={player} />
                         </Group>
                         <Button variant="subtle" onClick={openTeamViewer}>
                             View Team

@@ -16,11 +16,12 @@ export const BattleView: FC<BattleViewProps> = ({ id }) => {
     const { battle, isFetching: isLoading } = useBattle(id);
 
     return (
-        <Stack p={20}>
+        <Stack p={10}>
             {battle?.timestamp && <Timestamp timestamp={battle?.timestamp} />}
             {battle?.player1 && battle?.team1 && (
                 <PlayerTeam
                     p={10}
+                    shadow={battle.winner === 1 ? "md" : undefined}
                     withBorder
                     player={battle.player1}
                     team={battle.team1}
@@ -37,7 +38,7 @@ export const BattleView: FC<BattleViewProps> = ({ id }) => {
             {battle?.player2 && battle?.team2 && (
                 <PlayerTeam
                     p={10}
-                    withBorder
+                    shadow={battle.winner === 2 ? "md" : undefined}
                     player={battle.player2}
                     team={battle.team2}
                     winner={battle.winner === 2}
