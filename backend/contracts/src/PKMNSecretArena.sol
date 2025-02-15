@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.28;
 
-import "../lib/coprocessor-base-contract/src/CoprocessorAdapter.sol";
+import "coprocessor-base-contract/CoprocessorAdapter.sol";
 import "./PKMNBattleSimulator.sol";
 
 contract PKMNSecretArena is PKMNBattleSimulator {

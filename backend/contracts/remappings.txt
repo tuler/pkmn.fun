@@ -1,0 +1,2 @@
+forge-std/=lib/forge-std/src/
+coprocessor-base-contract=lib/coprocessor-base-contract/src
