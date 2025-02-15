@@ -17,7 +17,7 @@ export default defineConfig(() => {
                 abi: SimpleArena,
                 name: "SimpleArena",
                 address:
-                    env.NEXT_PUBLIC_PKMNSIMPLEARENA_CONTRACT_ADDRESS as Address,
+                    env.NEXT_PUBLIC_SIMPLE_ARENA_CONTRACT_ADDRESS as Address,
             },
         ],
         plugins: [react()],
