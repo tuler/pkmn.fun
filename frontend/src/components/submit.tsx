@@ -12,11 +12,15 @@ import {
 } from "@mantine/core";
 import { PokemonSet } from "@pkmn/sets";
 import { Teams } from "@pkmn/sim";
-import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
+import {
+    useAddRecentTransaction,
+    useConnectModal,
+} from "@rainbow-me/rainbowkit";
 import { IconExclamationCircle } from "@tabler/icons-react";
 import { FC, useEffect } from "react";
 import { stringToHex } from "viem";
 import {
+    useAccount,
     useSimulateContract,
     useWaitForTransactionReceipt,
     useWriteContract,
@@ -37,6 +41,8 @@ export const SubmitTeam: FC<SubmitTeamProps> = ({
     teamNumber,
     team,
 }) => {
+    const { isConnected } = useAccount();
+    const { openConnectModal } = useConnectModal();
     const { colorScheme } = useMantineColorScheme();
     const addRecentTransaction = useAddRecentTransaction();
     const packed = Teams.pack(team);
@@ -107,7 +113,7 @@ export const SubmitTeam: FC<SubmitTeamProps> = ({
                         <Button
                             onClick={onCancel}
                             variant="white"
-                            disabled={!submitTeam || isPending || !simulateData}
+                            disabled={isPending}
                         >
                             Cancel
                         </Button>
@@ -118,6 +124,14 @@ export const SubmitTeam: FC<SubmitTeamProps> = ({
                         >
                             {isPending ? "Confirming..." : "Submit"}
                         </Button>
+                        {!isConnected && openConnectModal && (
+                            <Button
+                                variant="gradient"
+                                onClick={openConnectModal}
+                            >
+                                Connect
+                            </Button>
+                        )}
                     </Group>
                 </Overlay>
             </Group>
