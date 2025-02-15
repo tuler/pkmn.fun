@@ -1,4 +1,4 @@
-import { pkmnSimpleArenaAbi, pkmnSimpleArenaAddress } from "@/hooks/contracts";
+import { simpleArenaAbi, simpleArenaAddress } from "@/hooks/contracts";
 import {
     Alert,
     Button,
@@ -55,8 +55,8 @@ export const SubmitTeam: FC<SubmitTeamProps> = ({
     } = useWriteContract();
 
     const { data: simulateData } = useSimulateContract({
-        abi: pkmnSimpleArenaAbi,
-        address: pkmnSimpleArenaAddress,
+        abi: simpleArenaAbi,
+        address: simpleArenaAddress,
         functionName: `submitTeam${teamNumber}`,
         args: [stringToHex(packed)],
     });

@@ -30,6 +30,7 @@ export const BattleTagline: FC<BattleTaglineProps> = ({ battle, id }) => {
                         <MiniPlayerTeam
                             player={battle.player1}
                             team={battle.team1}
+                            eloDelta={battle.eloDelta}
                             winner={battle.winner === 1}
                         />
                     </Stack>
@@ -37,6 +38,7 @@ export const BattleTagline: FC<BattleTaglineProps> = ({ battle, id }) => {
                     <MiniPlayerTeam
                         player={battle.player2}
                         team={battle.team2}
+                        eloDelta={-battle.eloDelta}
                         winner={battle.winner === 2}
                     />
                 </Flex>

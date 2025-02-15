@@ -1,4 +1,4 @@
-import PKMNSimpleArena from "@/abi/PKMNSimpleArena";
+import SimpleArena from "@/abi/SimpleArena";
 import { defineConfig, loadEnv } from "@wagmi/cli";
 import { react } from "@wagmi/cli/plugins";
 import { Address, erc20Abi } from "viem";
@@ -14,8 +14,8 @@ export default defineConfig(() => {
                 name: "erc20",
             },
             {
-                abi: PKMNSimpleArena,
-                name: "PKMNSimpleArena",
+                abi: SimpleArena,
+                name: "SimpleArena",
                 address:
                     env.NEXT_PUBLIC_PKMNSIMPLEARENA_CONTRACT_ADDRESS as Address,
             },

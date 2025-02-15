@@ -3,14 +3,9 @@ export default [
         type: "constructor",
         inputs: [
             {
-                name: "_taskIssuerAddress",
+                name: "_battleSimulator",
                 type: "address",
-                internalType: "address",
-            },
-            {
-                name: "_machineHash",
-                type: "bytes32",
-                internalType: "bytes32",
+                internalType: "contract IBattleSimulator",
             },
         ],
         stateMutability: "nonpayable",
@@ -20,6 +15,26 @@ export default [
         name: "FORMAT",
         inputs: [],
         outputs: [{ name: "", type: "string", internalType: "string" }],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "INITIAL_ELO",
+        inputs: [],
+        outputs: [{ name: "", type: "int32", internalType: "int32" }],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "battleSimulator",
+        inputs: [],
+        outputs: [
+            {
+                name: "",
+                type: "address",
+                internalType: "contract IBattleSimulator",
+            },
+        ],
         stateMutability: "view",
     },
     {
@@ -40,6 +55,11 @@ export default [
             { name: "team1", type: "bytes", internalType: "bytes" },
             { name: "team2", type: "bytes", internalType: "bytes" },
             { name: "winner", type: "uint8", internalType: "uint8" },
+            {
+                name: "eloDelta",
+                type: "int32",
+                internalType: "int32",
+            },
             { name: "err", type: "bytes", internalType: "bytes" },
             { name: "log", type: "bytes", internalType: "bytes" },
             {
@@ -52,36 +72,6 @@ export default [
     },
     {
         type: "function",
-        name: "computationSent",
-        inputs: [{ name: "", type: "bytes32", internalType: "bytes32" }],
-        outputs: [{ name: "", type: "bool", internalType: "bool" }],
-        stateMutability: "view",
-    },
-    {
-        type: "function",
-        name: "coprocessorCallbackOutputsOnly",
-        inputs: [
-            {
-                name: "_machineHash",
-                type: "bytes32",
-                internalType: "bytes32",
-            },
-            {
-                name: "_payloadHash",
-                type: "bytes32",
-                internalType: "bytes32",
-            },
-            {
-                name: "outputs",
-                type: "bytes[]",
-                internalType: "bytes[]",
-            },
-        ],
-        outputs: [],
-        stateMutability: "nonpayable",
-    },
-    {
-        type: "function",
         name: "getBattleCount",
         inputs: [],
         outputs: [{ name: "", type: "uint256", internalType: "uint256" }],
@@ -89,10 +79,33 @@ export default [
     },
     {
         type: "function",
-        name: "machineHash",
-        inputs: [],
-        outputs: [{ name: "", type: "bytes32", internalType: "bytes32" }],
+        name: "getElo",
+        inputs: [
+            {
+                name: "player",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        outputs: [{ name: "", type: "int32", internalType: "int32" }],
         stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "handleBattleResult",
+        inputs: [
+            { name: "", type: "bytes32", internalType: "bytes32" },
+            { name: "_winner", type: "uint8", internalType: "uint8" },
+            {
+                name: "_eloDelta",
+                type: "int32",
+                internalType: "int32",
+            },
+            { name: "_err", type: "bytes", internalType: "bytes" },
+            { name: "_log", type: "bytes", internalType: "bytes" },
+        ],
+        outputs: [],
+        stateMutability: "nonpayable",
     },
     {
         type: "function",
@@ -124,19 +137,6 @@ export default [
     },
     {
         type: "function",
-        name: "taskIssuer",
-        inputs: [],
-        outputs: [
-            {
-                name: "",
-                type: "address",
-                internalType: "contract ITaskIssuer",
-            },
-        ],
-        stateMutability: "view",
-    },
-    {
-        type: "function",
         name: "team1",
         inputs: [],
         outputs: [{ name: "", type: "bytes", internalType: "bytes" }],
@@ -164,7 +164,7 @@ export default [
     },
     {
         type: "event",
-        name: "PlayerChanged",
+        name: "ELOChanged",
         inputs: [
             {
                 name: "player",
@@ -173,83 +173,38 @@ export default [
                 internalType: "address",
             },
             {
-                name: "playerNumber",
-                type: "uint8",
+                name: "elo",
+                type: "int32",
                 indexed: false,
-                internalType: "uint8",
+                internalType: "int32",
+            },
+            {
+                name: "eloDelta",
+                type: "int32",
+                indexed: false,
+                internalType: "int32",
             },
         ],
         anonymous: false,
     },
     {
-        type: "error",
-        name: "ComputationNotFound",
+        type: "event",
+        name: "PlayerChanged",
         inputs: [
             {
-                name: "payloadHash",
-                type: "bytes32",
-                internalType: "bytes32",
+                name: "playerNumber",
+                type: "uint8",
+                indexed: false,
+                internalType: "uint8",
+            },
+            {
+                name: "player",
+                type: "address",
+                indexed: false,
+                internalType: "address",
             },
         ],
-    },
-    {
-        type: "error",
-        name: "InsufficientFunds",
-        inputs: [
-            {
-                name: "value",
-                type: "uint256",
-                internalType: "uint256",
-            },
-            {
-                name: "balance",
-                type: "uint256",
-                internalType: "uint256",
-            },
-        ],
-    },
-    {
-        type: "error",
-        name: "InvalidOutputLength",
-        inputs: [
-            {
-                name: "length",
-                type: "uint256",
-                internalType: "uint256",
-            },
-        ],
-    },
-    {
-        type: "error",
-        name: "InvalidOutputSelector",
-        inputs: [
-            {
-                name: "selector",
-                type: "bytes4",
-                internalType: "bytes4",
-            },
-            {
-                name: "expected",
-                type: "bytes4",
-                internalType: "bytes4",
-            },
-        ],
-    },
-    {
-        type: "error",
-        name: "MachineHashMismatch",
-        inputs: [
-            {
-                name: "current",
-                type: "bytes32",
-                internalType: "bytes32",
-            },
-            {
-                name: "expected",
-                type: "bytes32",
-                internalType: "bytes32",
-            },
-        ],
+        anonymous: false,
     },
     {
         type: "error",
@@ -259,17 +214,6 @@ export default [
                 name: "playerNumber",
                 type: "uint8",
                 internalType: "uint8",
-            },
-        ],
-    },
-    {
-        type: "error",
-        name: "UnauthorizedCaller",
-        inputs: [
-            {
-                name: "caller",
-                type: "address",
-                internalType: "address",
             },
         ],
     },

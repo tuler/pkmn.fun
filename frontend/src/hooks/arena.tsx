@@ -4,9 +4,9 @@ import { useEffect, useState } from "react";
 import { Address, hexToString } from "viem";
 import { useReadContracts } from "wagmi";
 import {
-    pkmnSimpleArenaAbi,
-    pkmnSimpleArenaAddress,
-    useWatchPkmnSimpleArenaPlayerChangedEvent,
+    simpleArenaAbi,
+    simpleArenaAddress,
+    useWatchSimpleArenaPlayerChangedEvent,
 } from "./contracts";
 
 export type Arena = {
@@ -22,34 +22,34 @@ export const useArena = () => {
     const read = useReadContracts({
         contracts: [
             {
-                abi: pkmnSimpleArenaAbi,
-                address: pkmnSimpleArenaAddress,
+                abi: simpleArenaAbi,
+                address: simpleArenaAddress,
                 functionName: "FORMAT",
             },
             {
-                abi: pkmnSimpleArenaAbi,
-                address: pkmnSimpleArenaAddress,
+                abi: simpleArenaAbi,
+                address: simpleArenaAddress,
                 functionName: "player1",
             },
             {
-                abi: pkmnSimpleArenaAbi,
-                address: pkmnSimpleArenaAddress,
+                abi: simpleArenaAbi,
+                address: simpleArenaAddress,
                 functionName: "player2",
             },
             {
-                abi: pkmnSimpleArenaAbi,
-                address: pkmnSimpleArenaAddress,
+                abi: simpleArenaAbi,
+                address: simpleArenaAddress,
                 functionName: "team1",
             },
             {
-                abi: pkmnSimpleArenaAbi,
-                address: pkmnSimpleArenaAddress,
+                abi: simpleArenaAbi,
+                address: simpleArenaAddress,
                 functionName: "team2",
             },
         ],
     });
 
-    useWatchPkmnSimpleArenaPlayerChangedEvent({
+    useWatchSimpleArenaPlayerChangedEvent({
         onLogs: () => read.refetch(),
     });
 

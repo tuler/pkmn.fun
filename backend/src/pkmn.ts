@@ -10,7 +10,7 @@ import {
 import { Hex, hexToString } from "viem";
 
 export type SimulationResult = {
-    winner: number; // 0 draw, 1 player1, 2 player2
+    winner: 0 | 1 | 2; // 0 draw, 1 player1, 2 player2
     error?: string;
     log?: string;
 };
@@ -107,10 +107,19 @@ export const simulate = async (
                 for (const { args, kwArgs } of Protocol.parse(chunk)) {
                     // check if winner message
                     if (args[0] === "win") {
-                        resolve({
-                            winner: parseInt(args[1].charAt(1)),
-                            log,
-                        });
+                        const w = parseInt(args[1].charAt(1));
+                        if (w === 0 || w === 1 || w === 2) {
+                            resolve({
+                                winner: w as 0 | 1 | 2,
+                                log,
+                            });
+                        } else {
+                            resolve({
+                                winner: 0,
+                                log,
+                                error: `invalid winner value: ${w}`,
+                            });
+                        }
                     }
 
                     // check if tie message

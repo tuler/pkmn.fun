@@ -5,6 +5,7 @@ import {
     parseAbiParameters,
     stringToHex,
 } from "viem";
+import { calculateEloDelta } from "./elo";
 import { simulate } from "./pkmn";
 
 const app = createApp({
@@ -17,9 +18,9 @@ app.addAdvanceHandler(async (data) => {
     const { payload } = data;
 
     // decode payload data, which has the matchId (for the response), the pkmn format, and teams
-    const [formatId, team1, team2] = decodeAbiParameters(
+    const [formatId, elo1, elo2, team1, team2] = decodeAbiParameters(
         parseAbiParameters(
-            "string format, bytes player1Team, bytes player2Team"
+            "string format, int32 elo1, int32 elo2, bytes team1, bytes team2"
         ),
         payload
     );
@@ -27,16 +28,22 @@ app.addAdvanceHandler(async (data) => {
     // run simulation
     const { winner, error, log } = await simulate(formatId, team1, team2);
 
+    // calculate elo delta
+    const eloDelta = calculateEloDelta(elo1, elo2, winner);
+
     // debug of battle
     console.log(`winner is P${winner}`);
+    console.log(`eloDelta is ${eloDelta}`);
     console.log(log ?? "");
     console.log(error ?? "");
 
     // create a notice with the expected match outcome
     await app.createNotice({
         payload: encodeAbiParameters(
-            parseAbiParameters("uint8 winner, bytes err, bytes log"),
-            [winner, stringToHex(error || ""), stringToHex(log || "")]
+            parseAbiParameters(
+                "uint8 winner, int32 eloDelta, bytes err, bytes log"
+            ),
+            [winner, eloDelta, stringToHex(error || ""), stringToHex(log || "")]
         ),
     });
 

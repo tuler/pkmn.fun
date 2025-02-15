@@ -2,9 +2,10 @@
 pragma solidity ^0.8.28;
 
 import "coprocessor-base-contract/CoprocessorAdapter.sol";
-import "./PKMNBattleSimulator.sol";
+import "./IBattleCallback.sol";
+import "./IBattleSimulator.sol";
 
-contract PKMNSecretArena is PKMNBattleSimulator {
+contract SecretArena is IBattleCallback {
     enum MatchPhase {
         COMMIT, // Players submit team hashes
         REVEAL, // Players reveal their teams
@@ -30,10 +31,12 @@ contract PKMNSecretArena is PKMNBattleSimulator {
         MatchPhase phase;
         MatchOutcome outcome;
         address winner;
+        int32 eloDelta;
         bytes err;
         bytes log;
     }
 
+    IBattleSimulator public battleSimulator;
     Match[] public matches;
     mapping(bytes32 => uint256) matchIds;
 
@@ -68,10 +71,9 @@ contract PKMNSecretArena is PKMNBattleSimulator {
     mapping(address => uint256) public playerActiveMatch;
     mapping(address => bool) public playerHasActiveMatch;
 
-    constructor(
-        address _taskIssuerAddress,
-        bytes32 _machineHash
-    ) PKMNBattleSimulator(_taskIssuerAddress, _machineHash) {}
+    constructor(IBattleSimulator _battleSimulator) {
+        battleSimulator = _battleSimulator;
+    }
 
     function commitTeam(bytes32 teamHash) external {
         if (teamHash == bytes32(0)) {
@@ -99,7 +101,8 @@ contract PKMNSecretArena is PKMNBattleSimulator {
                     outcome: MatchOutcome.UNDECIDED,
                     err: "",
                     log: "",
-                    winner: address(0)
+                    winner: address(0),
+                    eloDelta: 0
                 })
             );
 
@@ -177,10 +180,13 @@ contract PKMNSecretArena is PKMNBattleSimulator {
         ) {
             gameMatch.phase = MatchPhase.BATTLE;
             emit MatchStarted(matchId);
-            simulateBattle(
+            battleSimulator.simulateBattle(
                 FORMAT,
+                1500,
+                1500,
                 gameMatch.player1TeamData,
-                gameMatch.player2TeamData
+                gameMatch.player2TeamData,
+                this
             );
         }
     }
@@ -188,15 +194,17 @@ contract PKMNSecretArena is PKMNBattleSimulator {
     function handleBattleResult(
         bytes32 _payloadHash,
         uint8 _winner,
+        int32 _eloDelta,
         bytes memory _err,
         bytes memory _log
-    ) internal override {
+    ) external override {
         uint256 matchId = matchIds[_payloadHash];
         Match storage gameMatch = matches[matchId];
 
         // Update match state
         gameMatch.err = _err;
         gameMatch.log = _log;
+        gameMatch.eloDelta = _eloDelta;
         gameMatch.phase = MatchPhase.COMPLETED;
 
         // Set winner based on winner value (1 = player1, 2 = player2, 0 = draw)
