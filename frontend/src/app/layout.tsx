@@ -1,13 +1,13 @@
+import { ColorSchemeScript, mantineHtmlProps } from "@mantine/core";
 import "@mantine/core/styles.css";
 import "@rainbow-me/rainbowkit/styles.css";
-import { ColorSchemeScript, mantineHtmlProps } from "@mantine/core";
 import type { Metadata } from "next";
 import { type ReactNode } from "react";
 import { Providers } from "./providers";
 
 export const metadata: Metadata = {
     title: "pkmn.fun",
-    description: "pkmn showdown",
+    description: "Web3 AI Battle Simulation",
 };
 
 export default async function RootLayout(props: { children: ReactNode }) {
