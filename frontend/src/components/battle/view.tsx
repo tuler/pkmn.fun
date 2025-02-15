@@ -39,6 +39,7 @@ export const BattleView: FC<BattleViewProps> = ({ id }) => {
                 <PlayerTeam
                     p={10}
                     shadow={battle.winner === 2 ? "md" : undefined}
+                    withBorder
                     player={battle.player2}
                     team={battle.team2}
                     winner={battle.winner === 2}

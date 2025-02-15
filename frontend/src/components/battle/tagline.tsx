@@ -1,5 +1,5 @@
 import { Battle } from "@/hooks/battle";
-import { Group, NavLink, Stack, Text } from "@mantine/core";
+import { Flex, NavLink, Stack, Text } from "@mantine/core";
 import { IconChevronRight } from "@tabler/icons-react";
 import { FC } from "react";
 import { MiniPlayerTeam } from "./mini";
@@ -15,8 +15,13 @@ export const BattleTagline: FC<BattleTaglineProps> = ({ battle, id }) => {
         <NavLink
             href={`/b/${id}`}
             label={
-                <Group justify="space-between" grow>
-                    <Stack gap={0} pb="md">
+                <Flex
+                    align={{ base: "center", sm: "flex-end" }}
+                    gap={{ base: 0, sm: "xs" }}
+                    justify={{ sm: "space-evenly" }}
+                    direction={{ base: "column", sm: "row" }}
+                >
+                    <Stack gap={0}>
                         <Timestamp
                             timestamp={battle.timestamp}
                             size="xs"
@@ -28,15 +33,13 @@ export const BattleTagline: FC<BattleTaglineProps> = ({ battle, id }) => {
                             winner={battle.winner === 1}
                         />
                     </Stack>
-                    <Stack gap={0} pb="md">
-                        <Text>vs</Text>
-                        <MiniPlayerTeam
-                            player={battle.player2}
-                            team={battle.team2}
-                            winner={battle.winner === 2}
-                        />
-                    </Stack>
-                </Group>
+                    <Text mb={{ base: 0, sm: 20 }}>vs</Text>
+                    <MiniPlayerTeam
+                        player={battle.player2}
+                        team={battle.team2}
+                        winner={battle.winner === 2}
+                    />
+                </Flex>
             }
             rightSection={
                 <IconChevronRight
