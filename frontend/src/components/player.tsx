@@ -25,6 +25,7 @@ interface ArenaPlayerProps {
     format: Format;
     player?: Address;
     team?: PokemonSet<string>[] | null;
+    elo?: number;
     playerNumber: 1 | 2;
 }
 
@@ -33,6 +34,7 @@ export const ArenaPlayer: FC<ArenaPlayerProps> = ({
     player,
     playerNumber,
     team,
+    elo,
 }) => {
     const { colorScheme } = useMantineColorScheme();
     const [newTeam, setNewTeam] = useState<PokemonSet<string>[] | null>(null);
@@ -76,20 +78,25 @@ export const ArenaPlayer: FC<ArenaPlayerProps> = ({
                 </Group>
             )}
 
-            {player && player !== zeroAddress && team && team.length > 0 && (
-                <Stack>
-                    <TeamSpecies team={team} />
-                    <Group justify="space-between">
-                        <Group gap={2}>
-                            <Image src="/img/hat.png" w={32} />
-                            <AddressText address={player} />
+            {player &&
+                player !== zeroAddress &&
+                team &&
+                team.length > 0 &&
+                elo != undefined && (
+                    <Stack>
+                        <TeamSpecies team={team} />
+                        <Group justify="space-between">
+                            <Group gap={2}>
+                                <Image src="/img/hat.png" w={32} />
+                                <AddressText address={player} />
+                                <Text c="dimmed">({elo})</Text>
+                            </Group>
+                            <Button variant="subtle" onClick={openTeamViewer}>
+                                View Team
+                            </Button>
                         </Group>
-                        <Button variant="subtle" onClick={openTeamViewer}>
-                            View Team
-                        </Button>
-                    </Group>
-                </Stack>
-            )}
+                    </Stack>
+                )}
 
             {(!player || player === zeroAddress) &&
                 !team &&

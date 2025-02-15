@@ -5,7 +5,7 @@ import { ArenaPlayer } from "./player";
 
 export const Arena: FC = () => {
     const { arena } = useArena();
-    const { format, player1, player2, team1, team2 } = arena || {};
+    const { format, player1, player2, team1, team2, elo1, elo2 } = arena || {};
 
     return (
         <Stack align="center" gap={50}>
@@ -16,6 +16,7 @@ export const Arena: FC = () => {
                         player={player1}
                         team={team1}
                         playerNumber={1}
+                        elo={elo1}
                     />
                     <Title order={2}>vs</Title>
                     <ArenaPlayer
@@ -23,6 +24,7 @@ export const Arena: FC = () => {
                         player={player2}
                         team={team2}
                         playerNumber={2}
+                        elo={elo2}
                     />
                 </>
             )}

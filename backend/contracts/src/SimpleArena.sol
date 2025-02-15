@@ -96,11 +96,23 @@ contract SimpleArena is IBattleCallback {
         }
     }
 
-    function getElo(address player) external view returns (int32) {
+    function _getElo(address player) internal view returns (int32) {
         if (!eloInitialized[player]) {
             return INITIAL_ELO;
         }
         return elo[player];
+    }
+
+    function getElo(address player) external view returns (int32) {
+        return _getElo(player);
+    }
+
+    function getPlayer1Elo() external view returns (int32) {
+        return _getElo(player1);
+    }
+
+    function getPlayer2Elo() external view returns (int32) {
+        return _getElo(player2);
     }
 
     function maybeStartBattle() internal {

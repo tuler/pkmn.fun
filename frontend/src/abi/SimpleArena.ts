@@ -92,6 +92,20 @@ export default [
     },
     {
         type: "function",
+        name: "getPlayer1Elo",
+        inputs: [],
+        outputs: [{ name: "", type: "int32", internalType: "int32" }],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "getPlayer2Elo",
+        inputs: [],
+        outputs: [{ name: "", type: "int32", internalType: "int32" }],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
         name: "handleBattleResult",
         inputs: [
             { name: "", type: "bytes32", internalType: "bytes32" },
