@@ -55,7 +55,6 @@ export const ArenaPlayer: FC<ArenaPlayerProps> = ({
     };
 
     const onSubmit = () => {
-        console.log("CLEARING NEW TEAM");
         setNewTeam(null);
     };
 

@@ -75,7 +75,6 @@ export const SubmitTeam: FC<SubmitTeamProps> = ({
     }, [hash]);
 
     useEffect(() => {
-        console.log("isConfirmed", isConfirmed);
         if (isConfirmed) {
             onSuccess();
         }
