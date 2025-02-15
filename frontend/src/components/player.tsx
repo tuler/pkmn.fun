@@ -6,6 +6,7 @@ import {
     Image,
     Overlay,
     Stack,
+    Title,
     useMantineColorScheme,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
@@ -108,6 +109,11 @@ export const ArenaPlayer: FC<ArenaPlayerProps> = ({
                 onClose={closeTeamBuilder}
                 offset={8}
                 position="right"
+                title={
+                    <Title order={3} c="dimmed">
+                        {format.name}
+                    </Title>
+                }
             >
                 <TeamBuilder format={format} onSave={onSave} />
             </Drawer>

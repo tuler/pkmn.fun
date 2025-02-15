@@ -1,5 +1,5 @@
 import { useArena } from "@/hooks/arena";
-import { Group, Stack, Title } from "@mantine/core";
+import { Stack, Title } from "@mantine/core";
 import { FC } from "react";
 import { ArenaPlayer } from "./player";
 
@@ -11,10 +11,6 @@ export const Arena: FC = () => {
         <Stack align="center" gap={50}>
             {format && (
                 <>
-                    <Group gap={8}>
-                        <Title order={3}>{format.name}</Title>
-                        <Title order={3}>Arena</Title>
-                    </Group>
                     <ArenaPlayer
                         format={format}
                         player={player1}
