@@ -137,6 +137,13 @@ export default [
     },
     {
         type: "function",
+        name: "reset",
+        inputs: [],
+        outputs: [],
+        stateMutability: "nonpayable",
+    },
+    {
+        type: "function",
         name: "submitTeam1",
         inputs: [{ name: "teamData", type: "bytes", internalType: "bytes" }],
         outputs: [],

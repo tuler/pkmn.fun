@@ -13,4 +13,12 @@ interface IBattleSimulator {
         bytes memory _team2,
         IBattleCallback _receiver
     ) external;
+
+    function cancelBattle(
+        string memory _format,
+        int32 _elo1,
+        int32 _elo2,
+        bytes memory _team1,
+        bytes memory _team2
+    ) external;
 }

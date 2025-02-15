@@ -70,7 +70,8 @@ contract SimpleArena is IBattleCallback {
         // Emit PlayerChanged event for player1
         emit PlayerChanged(1, player1);
 
-        maybeStartBattle();
+        // start battle (if both players are assigned)
+        _startBattle();
     }
 
     function submitTeam2(bytes calldata teamData) external {
@@ -86,7 +87,34 @@ contract SimpleArena is IBattleCallback {
         // Emit PlayerChanged event for player2
         emit PlayerChanged(2, player2);
 
-        maybeStartBattle();
+        // start battle (if both players are assigned)
+        _startBattle();
+    }
+
+    // allows the reset of the arena
+    // this is provided in case the coprocessor fails to call back the ICoprocessorCallback
+    // XXX: protect this using a timer, while coprocessor does not have error handling
+    function reset() external {
+        // "cancel" any pending battle, so we don't get notified
+        battleSimulator.cancelBattle(
+            FORMAT,
+            elo[player1],
+            elo[player2],
+            team1,
+            team2
+        );
+
+        // clear the players
+        player1 = address(0);
+        player2 = address(0);
+
+        // clear the teams
+        team1 = "";
+        team2 = "";
+
+        // emit the player changed events
+        emit PlayerChanged(1, player1);
+        emit PlayerChanged(2, player2);
     }
 
     function initializeElo(address player) internal {
@@ -115,7 +143,7 @@ contract SimpleArena is IBattleCallback {
         return _getElo(player2);
     }
 
-    function maybeStartBattle() internal {
+    function _startBattle() internal {
         if (player1 != address(0) && player2 != address(0)) {
             battleSimulator.simulateBattle(
                 FORMAT,
