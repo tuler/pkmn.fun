@@ -39,12 +39,14 @@ export const BattleHistory: FC = () => {
                 </Title>
             )}
             {battleIds?.map((id) => <BattleHistoryItem key={id} id={0} />)}
-            <Pagination
-                total={pages.length}
-                value={activePage}
-                onChange={setPage}
-                mt="sm"
-            />
+            {pages.length > 1 && (
+                <Pagination
+                    total={pages.length}
+                    value={activePage}
+                    onChange={setPage}
+                    mt="sm"
+                />
+            )}
         </Stack>
     );
 };
