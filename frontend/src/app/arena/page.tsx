@@ -1,13 +1,15 @@
 "use client";
 
-import { Stack } from "@mantine/core";
 import { Arena } from "@/components/arena";
 import { BattleHistory } from "@/components/history";
+import { Divider, Stack } from "@mantine/core";
 
 function Play() {
     return (
-        <Stack gap={100} p={40}>
+        <Stack gap={40}>
+            <Divider />
             <Arena />
+            <Divider />
             <BattleHistory />
         </Stack>
     );
