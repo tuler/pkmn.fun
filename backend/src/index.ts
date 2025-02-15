@@ -28,6 +28,7 @@ app.addAdvanceHandler(async (data) => {
     const { winner, error, log } = await simulate(formatId, team1, team2);
 
     // debug of battle
+    console.log(`winner is P${winner}`);
     console.log(log ?? "");
     console.log(error ?? "");
 
@@ -38,8 +39,6 @@ app.addAdvanceHandler(async (data) => {
             [winner, stringToHex(error || ""), stringToHex(log || "")]
         ),
     });
-
-    console.log(`winner is P${winner}`);
 
     return "accept";
 });
