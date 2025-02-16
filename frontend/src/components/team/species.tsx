@@ -1,8 +1,8 @@
 "use client";
 
-import { FC } from "react";
+import { Flex, FlexProps, StyleProp, Text } from "@mantine/core";
 import { PokemonSet } from "@pkmn/sets";
-import { Flex, FlexProps, StyleProp } from "@mantine/core";
+import { FC } from "react";
 import { PokemonImage } from "../pokemon/image";
 
 export interface TeamSpeciesProps extends FlexProps {

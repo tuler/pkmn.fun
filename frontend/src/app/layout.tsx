@@ -8,6 +8,9 @@ import { Providers } from "./providers";
 export const metadata: Metadata = {
     title: "pkmn.fun",
     description: "Web3 AI Battle Simulation",
+    openGraph: {
+        images: "/opengraph-image/arena",
+    },
 };
 
 export default async function RootLayout(props: { children: ReactNode }) {
