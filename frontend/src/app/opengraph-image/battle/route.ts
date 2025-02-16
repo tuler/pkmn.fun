@@ -120,11 +120,9 @@ export async function GET(req: Request) {
         return new NextResponse("Battle not found", { status: 404 });
     }
 
-    const trophy = await sharp("public/img/trophy_small.png").toBuffer();
-    const silhouette = await sharp("public/img/pikachu_silhouette.png")
-        .resize(80, 80)
-        .flop()
-        .toBuffer();
+    const trophy = await sharp(
+        path.join(process.cwd(), "public/img/trophy_small.png")
+    ).toBuffer();
 
     // Load background image from public folder
     const backgroundPath = path.join(process.cwd(), "public/img/bg1.png");
