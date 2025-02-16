@@ -1,7 +1,8 @@
 import { Arena } from "@/hooks/arena";
+import { Battle } from "@/hooks/battle";
 import { simpleArenaAbi, simpleArenaAddress } from "@/hooks/contracts";
 import { Dex, Teams } from "@pkmn/sim";
-import { createConfig, http, readContracts } from "@wagmi/core";
+import { createConfig, http, readContract, readContracts } from "@wagmi/core";
 import { anvil, holesky } from "@wagmi/core/chains";
 import { hexToString } from "viem";
 
@@ -69,6 +70,30 @@ export const getArena = async (): Promise<Arena | undefined> => {
             team2: Teams.unpack(hexToString(t2.result)),
             elo1: e1.result,
             elo2: e2.result,
+        };
+    }
+    return undefined;
+};
+
+export const getBattle = async (id: number): Promise<Battle | undefined> => {
+    const read = await readContract(config, {
+        abi: simpleArenaAbi,
+        address: simpleArenaAddress,
+        functionName: "battles",
+        args: [BigInt(id)],
+    });
+    if (read) {
+        const [player1, player2, t1, t2, w, eloDelta, e, l, timestamp] = read;
+        return {
+            player1,
+            player2,
+            team1: Teams.unpack(hexToString(t1)),
+            team2: Teams.unpack(hexToString(t2)),
+            winner: w as 0 | 1 | 2,
+            eloDelta,
+            error: hexToString(e),
+            log: hexToString(l),
+            timestamp,
         };
     }
     return undefined;

@@ -1,7 +1,7 @@
 import { Sprites } from "@pkmn/img";
 import sharp from "sharp";
 
-const remote = async (url: string) => {
+export const remote = async (url: string) => {
     const response = await fetch(url);
     const arrayBuffer = await response.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
