@@ -84,7 +84,6 @@ const textImage = (options: TextImageOptions) => {
 <svg width="${width}" height="${height}">
   <style>
     .text {
-      font-family: ${fontFamily ?? "Arial"};
       font-size: ${fontSize ?? 24}px;
       fill: ${color ?? "black"};
     }
