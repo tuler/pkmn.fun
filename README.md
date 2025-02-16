@@ -6,10 +6,12 @@ PKMN.fun is a fan based Web3 Pokemon AI Battle Arena. Players can build teams an
 The [Arena](https://pkmn.fun/arena) can host one battle at a time.
 
 Game simulation is based on [Pokemon Showdown](https://pokemonshowdown.com), a very popular Pokemon battle simulator.
-Its [code](https://github.com/pkmn/ps) was used to build a project for the [Cartesi x EigenLayer experiment week](https://cartesi-x-eigenlayer.devfolio.co).
+Its [code](https://github.com/pkmn/ps) was used to build a project for the [Cartesi x EigenLayer experiment week](https://devfolio.co/projects/pkmnfun-444a).
 
 In season 1 a simple demo is running on the Holesky Ethereum testnet.
 Teams are public, which means the challenger has the advantage of building a special team to beat the first player to join.
+
+[![PKMN.fun Demo](https://img.youtube.com/vi/G4sLBH6ZMpw/0.jpg)](https://youtu.be/G4sLBH6ZMpw)
 
 ## Resources
 
