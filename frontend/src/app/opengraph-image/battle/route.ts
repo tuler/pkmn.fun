@@ -120,9 +120,9 @@ export async function GET(req: Request) {
         return new NextResponse("Battle not found", { status: 404 });
     }
 
+    const trophy = await sharp("public/img/trophy_small.png").toBuffer();
     const silhouette = await sharp("public/img/pikachu_silhouette.png")
         .resize(80, 80)
-        .ensureAlpha(0.5)
         .flop()
         .toBuffer();
 
@@ -160,8 +160,19 @@ export async function GET(req: Request) {
         const bottom = await Promise.all(
             bottomTeam(battle.team2, { side: "p1" })
         );
+
+        const composition = [player1Text, player2Text, ...top, ...bottom];
+        if (battle.winner === 1) {
+            composition.push({
+                input: trophy,
+                left: width - 100 - 20,
+                top: 60,
+            });
+        } else if (battle.winner === 2) {
+            composition.push({ input: trophy, left: 20, top: height - 160 });
+        }
         const finalImage = await sharp(background)
-            .composite([player1Text, player2Text, ...top, ...bottom])
+            .composite(composition)
             .toFormat("png")
             .toBuffer();
 
