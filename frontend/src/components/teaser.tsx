@@ -1,17 +1,22 @@
 import { TeamSpecies } from "@/components/team/species";
 import { ActionIcon, Anchor, Button, Stack, useMatches } from "@mantine/core";
-import { PokemonSet } from "@pkmn/sets";
-import { TeamGenerators } from "@pkmn/randoms";
-import { IconBrandX, IconMoodCrazyHappy } from "@tabler/icons-react";
-import { FC, useState } from "react";
-import { Dex, Format, PRNG, PRNGSeed } from "@pkmn/sim";
 import { useViewportSize } from "@mantine/hooks";
+import { TeamGenerators } from "@pkmn/randoms";
+import { PokemonSet } from "@pkmn/sets";
+import { Dex, Format, PRNG, PRNGSeed } from "@pkmn/sim";
+import {
+    IconBrandX,
+    IconMoodCrazyHappy,
+    IconSwords,
+} from "@tabler/icons-react";
+import Link from "next/link";
+import { FC, useState } from "react";
 
 const DEFAULT_FORMAT = Dex.formats.get("gen9randombattle");
 
 const randomTeam = (
     format: Format,
-    seed?: PRNG | PRNGSeed,
+    seed?: PRNG | PRNGSeed
 ): PokemonSet<string>[] | undefined => {
     const teamGenerator = TeamGenerators.getTeamGenerator(format, seed);
     return teamGenerator.getTeam();
@@ -19,8 +24,10 @@ const randomTeam = (
 
 export const Teaser: FC = () => {
     const [team, setTeam] = useState<PokemonSet<string>[] | undefined>(
-        randomTeam(DEFAULT_FORMAT, PRNG.get(`sodium,0`)),
+        randomTeam(DEFAULT_FORMAT, PRNG.get(`sodium,0`))
     );
+
+    const openArena = true;
 
     const { height } = useViewportSize();
     const count = useMatches({
@@ -51,14 +58,27 @@ export const Teaser: FC = () => {
             </Anchor>
             <Stack gap={gap} mih={400} justify="flex-end" align="center">
                 <TeamSpecies team={team?.slice(0, count)} />
-                <Button
-                    leftSection={<IconMoodCrazyHappy />}
-                    variant="gradient"
-                    onClick={() => setTeam(randomTeam(DEFAULT_FORMAT))}
-                    size="lg"
-                >
-                    I'm feeling lucky!
-                </Button>
+                {!openArena && (
+                    <Button
+                        leftSection={<IconMoodCrazyHappy />}
+                        variant="gradient"
+                        onClick={() => setTeam(randomTeam(DEFAULT_FORMAT))}
+                        size="lg"
+                    >
+                        I'm feeling lucky!
+                    </Button>
+                )}
+                {openArena && (
+                    <Button
+                        leftSection={<IconSwords />}
+                        component={Link}
+                        href={"/arena"}
+                        variant="gradient"
+                        size="lg"
+                    >
+                        Arena
+                    </Button>
+                )}
             </Stack>
         </Stack>
     );
