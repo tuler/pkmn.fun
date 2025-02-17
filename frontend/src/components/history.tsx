@@ -29,7 +29,7 @@ export const BattleHistory: FC = () => {
         Array.from({ length: Number(count ?? 0) }, (_, i) => i),
         10
     );
-    const [activePage, setPage] = useState(pages.length);
+    const [activePage, setPage] = useState(1);
     const battleIds = pages[activePage - 1];
     return (
         <Stack gap={0} align="center">
