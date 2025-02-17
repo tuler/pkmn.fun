@@ -27,7 +27,7 @@ export const BattleHistory: FC = () => {
     const { count } = useBattleCount();
     const pages = chunk(
         Array.from({ length: Number(count ?? 0) }, (_, i) => i),
-        10,
+        10
     );
     const [activePage, setPage] = useState(1);
     const battleIds = pages[activePage - 1];
@@ -38,7 +38,9 @@ export const BattleHistory: FC = () => {
                     Past Battles
                 </Title>
             )}
-            {battleIds?.map((id) => <BattleHistoryItem key={id} id={0} />)}
+            {battleIds?.map((id) => (
+                <BattleHistoryItem key={id} id={id} />
+            ))}
             {pages.length > 1 && (
                 <Pagination
                     total={pages.length}
