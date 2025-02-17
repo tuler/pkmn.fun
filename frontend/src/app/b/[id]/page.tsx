@@ -10,7 +10,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const id = (await params).id;
     return {
         openGraph: {
-            images: `/opengraph-image/battle?id=${id}`,
+            images: `/opengraph-image/battle/${id}`,
         },
     };
 }
