@@ -2,7 +2,7 @@
 const nextConfig = {
     outputFileTracingRoot: process.cwd(),
     outputFileTracingIncludes: {
-        "api/**/*": ["fonts/**/*"],
+        "/opengraph-image/**/*": ["fonts/**/*"],
     },
 };
 
