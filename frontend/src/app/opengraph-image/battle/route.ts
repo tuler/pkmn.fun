@@ -84,6 +84,7 @@ const textImage = (options: TextImageOptions) => {
 <svg width="${width}" height="${height}">
   <style>
     .text {
+      font-family: ${fontFamily ?? "RobotoMono"};
       font-size: ${fontSize ?? 24}px;
       fill: ${color ?? "black"};
     }
@@ -105,6 +106,19 @@ const textImage = (options: TextImageOptions) => {
 export async function GET(req: Request) {
     const width = 1200;
     const height = 630;
+
+    // Configure Sharp to use the custom fonts
+    const fontConfigPath = path.join(process.cwd(), "fonts", "fonts.conf");
+    const fontPath = path.join(
+        process.cwd(),
+        "fonts",
+        "RobotoMono-VariableFont_wght.ttf"
+    );
+    sharp.cache(false);
+    if (process.env.NODE_ENV === "production") {
+        process.env.FONTCONFIG_PATH = "/var/task/fonts";
+        process.env.LD_LIBRARY_PATH = "/var/task";
+    }
 
     // get battle id from request
     const url = new URL(req.url);

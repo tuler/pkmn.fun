@@ -1,4 +1,9 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+    outputFileTracingRoot: process.cwd(),
+    outputFileTracingIncludes: {
+        "api/**/*": ["fonts/**/*"],
+    },
+};
 
 module.exports = nextConfig;
