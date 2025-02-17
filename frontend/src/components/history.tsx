@@ -29,7 +29,7 @@ export const BattleHistory: FC = () => {
         Array.from({ length: Number(count ?? 0) }, (_, i) => i),
         10
     );
-    const [activePage, setPage] = useState(1);
+    const [activePage, setPage] = useState(pages.length);
     const battleIds = pages[activePage - 1];
     return (
         <Stack gap={0} align="center">
@@ -38,7 +38,7 @@ export const BattleHistory: FC = () => {
                     Past Battles
                 </Title>
             )}
-            {battleIds?.map((id) => (
+            {battleIds?.reverse().map((id) => (
                 <BattleHistoryItem key={id} id={id} />
             ))}
             {pages.length > 1 && (
